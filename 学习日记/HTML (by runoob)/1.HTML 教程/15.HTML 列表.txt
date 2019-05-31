@@ -1,0 +1,160 @@
+1.HTML 列表
+HTML 支持有序、无序和定义列表:
+有序列表            无序列表
+第一个列表项        列表项
+第二个列表项        列表项
+第三个列表项        列表项
+
+2.实例
+无序列表
+本例演示无序列表。
+<!DOCTYPE html>
+<html>
+<head> 
+<meta charset="utf-8"> 
+<title>菜鸟教程(runoob.com)</title> 
+</head> 
+<body>
+
+<h4>无序列表:</h4>
+<ul>
+  <li>Coffee</li>
+  <li>Tea</li>
+  <li>Milk</li>
+</ul>
+
+</body>
+</html>
+
+有序列表
+本例演示有序列表。
+<!DOCTYPE html>
+<html>
+<head> 
+<meta charset="utf-8"> 
+<title>菜鸟教程(runoob.com)</title> 
+</head>
+<body>
+
+<ol>
+  <li>Coffee</li>
+  <li>Tea</li>
+  <li>Milk</li>
+</ol>
+
+<ol start="50">
+  <li>Coffee</li>
+  <li>Tea</li>
+  <li>Milk</li>
+</ol>
+ 
+</body>
+</html>
+
+3.HTML无序列表
+无序列表是一个项目的列表，此列项目使用粗体圆点（典型的小黑圆圈）进行标记。
+无序列表使用 <ul> 标签
+
+<ul>
+<li>Coffee</li>
+<li>Milk</li>
+</ul>
+
+4.HTML 有序列表
+同样，有序列表也是一列项目，列表项目使用数字进行标记。 有序列表始于 <ol> 标签。每个列表项始于 <li> 标签。
+列表项使用数字来标记。
+
+<ol>
+<li>Coffee</li>
+<li>Milk</li>
+</ol>
+
+5.HTML 自定义列表
+自定义列表不仅仅是一列项目，而是项目及其注释的组合。
+自定义列表以 <dl> 标签开始。每个自定义列表项以 <dt> 开始。每个自定义列表项的定义以 <dd> 开始。
+
+<dl>
+<dt>Coffee</dt>
+<dd>- black hot drink</dd>
+<dt>Milk</dt>
+<dd>- white cold drink</dd>
+</dl>
+浏览器显示如下：
+Coffee
+- black hot drink
+Milk
+- white cold drink
+
+6.注意事项 - 有用提示
+提示: 列表项内部可以使用段落、换行符、图片、链接以及其他列表等等。
+
+7.更多实例
+7.1不同类型的有序列表
+本例演示不同类型的有序列表。
+7.2不同类型的无序列表
+本例演示不同类型的无序列表。
+7.3嵌套列表
+本例演示如何嵌套列表。
+7.4嵌套列表 2
+本例演示更复杂的嵌套列表。
+7.5自定义列表
+本例演示一个定义列表。
+
+8.HTML 列表标签
+标签	描述
+<ol>	定义有序列表
+<ul>	定义无序列表
+<li>	定义列表项
+<dl>	定义列表
+<dt>	自定义列表项目
+<dd>	定义自定列表项的描述
+
+9.笔记
+HTML：My 列表 实例:
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Demo</title>
+</head>
+<body>
+  <h1>
+    My 列表
+  </h1>
+  <table border="2" cellpadding="30">
+    <tr>
+      <td>
+	<ul>
+      <li>Food</li>
+      <ol>
+          <li>薯片</li>
+          <li>棒棒糖</li>
+          <li>果冻</li>
+          <li>巧克力</li>
+          <li>辣条</li>
+      </ol>
+      <li>Fruits</li>
+      <ol type="A">
+        <li>西瓜</li>
+        <li>桔子</li>
+        <li>哈蜜瓜</li>
+        <li>草莓</li>
+        <li>葡萄</li>
+        <li>香蕉</li>
+        <li>苹果</li>
+      </ol>
+      <li>Meat</li>
+      <ol type="I">
+        <li>羊肉</li>
+        <li>牛肉</li>
+        <li>猪肉</li>
+        <li>鸡肉</li>
+        <li>涮羊肉</li>
+        <li>生鱼片</li>
+      </ol>
+  </ul>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

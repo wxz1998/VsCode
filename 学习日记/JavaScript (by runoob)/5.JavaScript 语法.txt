@@ -1,0 +1,168 @@
+1.
+JavaScript 语法
+JavaScript 是一个程序语言。语法规则定义了语言结构。
+
+2.
+JavaScript 语法
+JavaScript 是一个脚本语言。
+
+它是一个轻量级，但功能强大的编程语言。
+
+3.
+JavaScript 字面量
+在编程语言中，一般固定值称为字面量，如 3.14。
+
+数字（Number）字面量 可以是整数或者是小数，或者是科学计数(e)。
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>菜鸟教程(runoob.com)</title>
+</head>
+<body>
+	
+<p id="demo"></p>
+<script>
+document.getElementById("demo").innerHTML = 123e5;
+</script>
+	
+</body>
+</html>
+
+尝试一下 »
+字符串（String）字面量 可以使用单引号或双引号:
+
+<!DOCTYPE html>
+<html>
+<head> 
+<meta charset="utf-8"> 
+<title>菜鸟教程(runoob.com)</title> 
+</head>
+<body>
+	
+<p id="demo"></p>
+<script>
+document.getElementById("demo").innerHTML = 'John Doe';
+</script>
+	
+</body>
+</html>
+
+尝试一下 »
+表达式字面量 用于计算：
+
+<!DOCTYPE html>
+<html>
+<head> 
+<meta charset="utf-8"> 
+<title>菜鸟教程(runoob.com)</title> 
+</head>
+<body>
+	
+<p id="demo"></p>
+<script>
+document.getElementById("demo").innerHTML = 5 * 10;
+</script>
+	
+</body>
+</html>
+
+尝试一下 »
+数组（Array）字面量 定义一个数组：
+
+[40, 100, 1, 5, 25, 10]
+对象（Object）字面量 定义一个对象：
+
+{firstName:"John", lastName:"Doe", age:50, eyeColor:"blue"}
+函数（Function）字面量 定义一个函数：
+
+function myFunction(a, b) { return a * b;}
+
+4.
+JavaScript 变量
+在编程语言中，变量用于存储数据值。
+
+JavaScript 使用关键字 var 来定义变量， 使用等号来为变量赋值：
+
+<!DOCTYPE html>
+<html>
+<head> 
+<meta charset="utf-8"> 
+<title>菜鸟教程(runoob.com)</title> 
+</head>
+<body>
+
+<p id="demo"></p>
+<script>
+var length;
+length = 6;
+document.getElementById("demo").innerHTML = length;
+</script>
+
+</body>
+</html>
+
+尝试一下 »
+变量可以通过变量名访问。在指令式语言中，变量通常是可变的。字面量是一个恒定的值。
+
+变量是一个名称。字面量是一个值。
+
+5.
+JavaScript 操作符
+JavaScript使用 算术运算符 来计算值:
+
+<!DOCTYPE html>
+<html>
+<head> 
+<meta charset="utf-8"> 
+<title>菜鸟教程(runoob.com)</title> 
+</head>
+<body>
+
+<p id="demo"></p>
+<script>
+document.getElementById("demo").innerHTML = (5 + 6) * 10;
+</script>
+
+</body>
+</html>
+
+尝试一下 »
+JavaScript使用赋值运算符给变量赋值：
+
+<!DOCTYPE html>
+<html>
+<head> 
+<meta charset="utf-8"> 
+<title>菜鸟教程(runoob.com)</title> 
+</head>
+<body>
+
+<p id="demo"></p>
+<script>
+var x, y, z;
+x = 5;
+y = 6;
+z = (x + y) * 10;
+document.getElementById("demo").innerHTML = z;
+</script>
+
+</body>
+</html>
+
+尝试一下 »
+JavaScript语言有多种类型的运算符：
+
+类型	                实例	                描述
+赋值，算术和位运算符	    =  +  -  *  /	    在 JS 运算符中描述
+条件，比较及逻辑运算符	    ==  != <  > 	    在 JS 比较运算符中描述
+
+6.
+JavaScript 语句
+在 HTML 中，JavaScript 语句向浏览器发出的命令。
+
+语句是用分号分隔：
+
+x = 5 + 6;
+y = x * 10;
