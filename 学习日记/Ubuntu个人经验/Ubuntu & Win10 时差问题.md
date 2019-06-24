@@ -1,4 +1,4 @@
-# 怎样解决Windows10时间快和Ubuntu时间差问题？
+# 怎样解决Windows10时间快和Ubuntu时间差问题
 
 - UTC即Universal Time Coordinated，协调世界时（世界统一时间）
 - GMT 即Greenwich Mean Time，格林尼治平时
@@ -11,3 +11,7 @@
 - 在 Ubuntu 16.04 版本以前，关闭UTC的方法是编辑/etc/default/rcS，将UTC=yes改成UTC=no， 但在Ubuntu 16.04使用systemd启动之后，时间改成了由timedatectl来管理，所以更改方法是
 - timedatectl set-local-rtc 1 --adjust-system-clock
 - 执行后重启Ubuntu，应该就没有问题了。
+- 2.打开Ubuntu终端输入：
+- sudo apt-get install ntpdate
+- sudo ntpdate time.windows.com
+- sudo hwclock --localtime --systohc
