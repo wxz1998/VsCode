@@ -18,7 +18,7 @@
 - wget https://launcher.mojang.com/v1/objects/8494e844e911ea0d63878f64da9dcc21f53a3463/server.jar
 - 下面步骤在第三步之后完成最好
 - 启动java虚拟机
-- java -Xmx1024M -Xms1024M -jar -server.jar nogui
+- java -Xmx1024M -Xms1024M -jar server.jar nogui
 - 第一次可能会停止运行，因为cloudstudio硬件配置太差
 - 改一下启动配置
 - 打开mcserver下eula.txt
