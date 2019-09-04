@@ -4,4 +4,12 @@
 
 - 解决方法：两个方法，第一个是换回旧版cmd（打开cmd，右键窗体，属性，换回旧版），第二个是改设置用bash（在VSCode设置里面将默认终端配置为GitBash）。
 
-## 问题2：
+## 问题2：新版 VS Code 如何设置中文
+
+- 刚刚安装的VSCode软件默认使用的是英文语言环境
+- 这里需要使用快捷键【Ctrl+Shift+P】来实现
+- 在弹出的搜索框中输入【configure language】
+- 然后选择搜索出来的【Configure Display Language】
+- 如果没有中文选项就点击安装其他语言
+- 安装中文，然后再选择它即可
+  
