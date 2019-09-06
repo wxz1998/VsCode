@@ -12,4 +12,8 @@
 - 然后选择搜索出来的【Configure Display Language】
 - 如果没有中文选项就点击安装其他语言
 - 安装中文，然后再选择它即可
-  
+
+## 问题3：Ubuntu 下更新visualstuido code
+
+- wget https://vscode-update.azurewebsites.net/latest/linux-deb-x64/stable -O /tmp/code_latest_amd64.deb 
+- sudo dpkg -i /tmp/code_latest_amd64.deb
