@@ -55,3 +55,9 @@
 - minify
 - vs color picker
 - xml tools
+
+## PDF 插件推荐
+
+- 通常情况下使用 vscode-pdf 即可
+- 推荐使用 LaTeX Workshop
+- 既可以预览 pdf 文档 还能编写 latex 文本
