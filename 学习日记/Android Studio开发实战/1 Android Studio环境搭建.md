@@ -24,3 +24,5 @@ Android应用开发环境依赖于 JDK SDK NDK 三种工具
 3. Android7.0 默认使用jdk1.8编译
 
 #### 1.2.2.2 SDK
+
+SDK是Android应用的编译器,全称为Software Development Kit,即软件开发工具包.
