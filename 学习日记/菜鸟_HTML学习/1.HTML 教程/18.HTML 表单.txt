@@ -1,0 +1,198 @@
+1.HTML 表单和输入
+HTML 表单用于收集不同类型的用户输入。
+
+2.在线实例
+2.1创建文本字段 (Text field)
+本例演示如何在 HTML 页面创建文本域。用户可以在文本域中写入文本。
+<!DOCTYPE html>
+<html>
+<head> 
+<meta charset="utf-8"> 
+<title>菜鸟教程(runoob.com)</title> 
+</head>
+<body>
+
+<form action="">
+First name: <input type="text" name="firstname"><br>
+Last name: <input type="text" name="lastname">
+</form>
+
+<p><b>注意：</b> 表单本身是不可见的。并且注意一个文本字段的默认宽度是20个字符。</p>
+
+</body>
+</html>
+
+2.2创建密码字段
+本例演示如何创建 HTML 的密码域。
+<!DOCTYPE html>
+<html>
+<head> 
+<meta charset="utf-8"> 
+<title>菜鸟教程(runoob.com)</title> 
+</head>
+<body>
+
+<form action="">
+Username: <input type="text" name="user"><br>
+Password: <input type="password" name="password">
+</form>
+
+<p><b>注意：</b> 密码字段中的字符是隐藏的(显示为星号或圆圈)。</p>
+
+</body>
+</html>
+
+3.HTML 表单
+表单是一个包含表单元素的区域。
+表单元素是允许用户在表单中输入内容,比如：文本域(textarea)、下拉列表、单选框(radio-buttons)、复选框(checkboxes)等等。
+表单使用表单标签 <form> 来设置:
+<form>
+.
+input 元素
+.
+</form>
+
+4.HTML 表单 - 输入元素
+多数情况下被用到的表单标签是输入标签（<input>）。
+输入类型是由类型属性（type）定义的。大多数经常被用到的输入类型如下：
+
+4.1文本域（Text Fields）
+文本域通过<input type="text"> 标签来设定，当用户要在表单中键入字母、数字等内容时，就会用到文本域。
+
+<form>
+First name: <input type="text" name="firstname"><br>
+Last name: <input type="text" name="lastname">
+</form>
+
+注意:表单本身并不可见。同时，在大多数浏览器中，文本域的缺省宽度是20个字符。
+
+4.2密码字段
+密码字段通过标签<input type="password"> 来定义:
+
+<form>
+Password: <input type="password" name="pwd">
+</form>
+
+注意:密码字段字符不会明文显示，而是以星号或圆点替代。
+
+5.单选按钮（Radio Buttons）
+<input type="radio"> 标签定义了表单单选框选项
+
+<form>
+<input type="radio" name="sex" value="male">Male<br>
+<input type="radio" name="sex" value="female">Female
+</form>
+
+6.复选框（Checkboxes）
+<input type="checkbox"> 定义了复选框. 用户需要从若干给定的选择中选取一个或若干选项。
+
+<form>
+<input type="checkbox" name="vehicle" value="Bike">I have a bike<br>
+<input type="checkbox" name="vehicle" value="Car">I have a car 
+</form>
+
+7.提交按钮(Submit Button)
+<input type="submit"> 定义了提交按钮.
+当用户单击确认按钮时，表单的内容会被传送到另一个文件。表单的动作属性定义了目的文件的文件名。由动作属性定义的这个文件通常会对接收到的输入数据进行相关的处理。:
+
+<form name="input" action="html_form_action.php" method="get">
+Username: <input type="text" name="user">
+<input type="submit" value="Submit">
+</form>
+
+假如您在上面的文本框内键入几个字母，然后点击确认按钮，那么输入数据会传送到 "html_form_action.php" 的页面。该页面将显示出输入的结果。
+
+8.更多实例
+8.1
+单选按钮(Radio buttons)
+本例演示如何在 HTML 中创建单选按钮。
+8.2
+复选框(Checkboxes)
+本例演示如何在 HTML 页中创建复选框。用户可以选中或取消选取复选框。
+8.3
+简单的下拉列表
+本例演示如何在 HTML 页面中创建简单的下拉列表框。下拉列表框是一个可选列表。
+8.4
+预选下拉列表
+本例演示如何创建一个简单的带有预选值的下拉列表。
+8.5
+文本域(Textarea)
+本例演示如何创建文本域（多行文本输入控件）。用户可在文本域中写入文本。可写入字符的字数不受限制。
+8.6
+创建按钮
+本例演示如何创建按钮。你可以对按钮上的文字进行自定义。
+
+9.表单实例
+9.1
+带边框的表单
+本例演示如何在数据周围绘制一个带标题的框。
+9.2
+带有输入框和确认按钮的表单
+本例演示如何向页面添加表单。此表单包含两个输入框和一个确认按钮。
+9.3
+带有复选框的表单
+此表单包含两个复选框和一个确认按钮。
+9.4
+带有单选按钮的表单
+此表单包含两个单选框和一个确认按钮。
+9.5
+从表单发送电子邮件
+此例演示如何从表单发送电子邮件。
+
+10.HTML 表单标签
+New : HTML5新标签
+标签	        描述
+<form>	        定义供用户输入的表单
+<input>	        定义输入域
+<textarea>	    定义文本域 (一个多行的输入控件)
+<label>	        定义了 <input> 元素的标签，一般为输入标题
+<fieldset>	    定义了一组相关的表单元素，并使用外框包含起来
+<legend>	    定义了 <fieldset> 元素的标题
+<select>	    定义了下拉选项列表
+<optgroup>	    定义选项组
+<option>	    定义下拉列表中的选项
+<button>	    定义一个点击按钮
+<datalist>New	指定一个预先定义的输入控件选项列表
+<keygen>New	    定义了表单的密钥对生成器字段
+<output>New	    定义一个计算结果
+
+11.笔记
+11.1
+<input type="reset">定义重置按钮
+<input type="reset" name="button" id="button" value="重置">
+点击之后会将重置按钮所在的表单中填写的内容重新设置为默认值。
+
+<!DOCTYPE html>
+<html>
+<head> 
+<meta charset="utf-8"> 
+<title>菜鸟教程(runoob.com)</title> 
+</head>
+<body>
+
+<form action="demo-form.php">
+  Email: <input type="text" name="email"><br>
+  Pin: <input type="text" name="pin" maxlength="4"><br>
+  <input type="reset" value="重置">
+  <input type="submit" value="提交">
+</form>
+
+<p>点击重置按钮重新设置表单。</p>
+
+</body>
+</html>
+
+11.2
+表单中的单选按钮可以设置以下几个属性：value、name、checked
+
+ value：提交数据到服务器的值（后台程序PHP使用）
+ name：为控件命名，以备后台程序 ASP、PHP 使用
+ checked：当设置 checked="checked" 时，该选项被默认选中
+
+<form>
+<p>你生活在哪个国家？</p>
+<input type="radio" name="country" value="China" checked="checked">中国<br />
+<input type="radio" name="country" value="the USA">美国
+</form>
+
+注意：同一组的单选按钮，name 取值一定要一致，比如上面例子为同一个名称“country”，这样同一组的单选按钮才可以起到单选的作用。

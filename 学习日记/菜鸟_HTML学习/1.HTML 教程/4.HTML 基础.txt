@@ -1,0 +1,45 @@
+1.HTML 标题
+HTML 标题（Heading）是通过<h1> - <h6> 标签来定义的.
+
+实例
+<h1>这是一个标题</h1>
+<h2>这是一个标题</h2>
+<h3>这是一个标题</h3>
+
+2.HTML 段落
+HTML 段落是通过标签 <p> 来定义的.
+
+实例
+<p>这是一个段落。</p>
+<p>这是另外一个段落。</p>
+
+3.HTML 链接
+HTML 链接是通过标签 <a> 来定义的.
+
+实例
+<a href="http://www.runoob.com">这是一个链接</a>
+提示:在 href 属性中指定链接的地址。
+
+4.HTML 图像
+HTML 图像是通过标签 <img> 来定义的.
+
+实例
+<img src="/images/logo.png" width="258" height="39" />
+注意:图像的名称和尺寸是以属性的形式提供的。
+
+5.笔记
+    1、*.html 文件跟 *.jpg 文件(f盘)在不同目录下：
+
+    <img src="file:///f:/*.jpg" width="300" height="120"/>
+    2、*.html 文件跟 *.jpg 图片在相同目录下：
+
+    <img src="*.jpg" width="300" height="120"/> 3、*.html 文件跟 *.jpg 图片在不同目录下：
+    a、图片 *.jpg 在 image 文件夹中，*.html 跟 image 在同一目录下：
+
+    <img src="image/*.jpg/"width="300" height="120"/>
+    b、图片 *.jpg 在 image 文件夹中，*.html 在 connage 文件夹中，image 跟 connage 在同一目录下：
+
+    <img src="../image/*.jpg/"width="300" height="120"/>
+    4、如果图片来源于网络，那么写绝对路径：
+
+    <img src="http://static.runoob.com/images/runoob-logo.png" width="300" height="120"/>

@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - calculate",
+            "request": "launch",
+            "mainClass": "calculate"
+        }
+    ]
+}
