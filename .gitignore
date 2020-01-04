@@ -1,12 +1,10 @@
 #c_work
 
-c_work/.vscode/
-c_work/c2019.code-workspace
+c_work/
 
 #cpp_work
 
-cpp_work/.vscode/
-cpp_work/cpp1807.code-workspace
+cpp_work/
 
 #findu-master
 
@@ -14,12 +12,11 @@ findu-master/
 
 #java_work
 
-java_work/.vscode/
-java_work/java19.code-workspace
+java_work/
 
 #morsecodecom
 
-morsecodecom/.vscode/
+morsecodecom/
 
 #YouDaoNotes
 
