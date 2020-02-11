@@ -1,0 +1,24 @@
+# LastPass 是一个密码管理工具
+
+- 谷歌邮箱注册
+- 密码提示: steam without dot
+
+```text
+iioio1io10io10iio10i
+oio10io0io10io01io10
+io01iio10io01i1io10i
+o01i1oio10io01i1o0io
+10io01i1o0iio10io01i
+1o0i1io10io01i1o0i10
+io10io01i1o0i10oio10
+io01i1o0i10oiio10io0
+1i1o0i10oi0io10io01i
+1o0i10oi0oio10io01i1
+o0i10oi0o1io10io01i1
+o0i10oi0o1iio10io01i
+1o0i10oi0o1i0io10io0
+1i1o0i10oi0o1i01io10
+io01i1o0i10oi0o1i01o
+io10io01i1o0i10oi0o1
+i01o
+```
