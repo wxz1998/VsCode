@@ -1,0 +1,15 @@
+1.HTML 颜色值
+颜色由红(R)、绿(G)、蓝(B)组成。
+
+2.颜色值
+颜色值由十六进制来表示红、绿、蓝（RGB）。
+每个颜色的最低值为 0(十六进制为 00)，最高值为 255(十六进制为FF)。
+十六进制值的写法为 # 号后跟三个或六个十六进制字符。
+三位数表示法为：#RGB，转换为6位数表示为：#RRGGBB。
+
+3.通过十六进制（Hex）的颜色值排序
+http://www.runoob.com/html/html-colorvalues.html
+查看以颜色名称排序的颜色列表
+http://www.runoob.com/html/html-colornames.html
+
+4.

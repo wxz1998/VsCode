@@ -1,1 +1,0 @@
-//本课程会介绍项目管理工具Maven的使用，以及如何在IntelliJ IDEA和eclipse两款工具中使用Maven。

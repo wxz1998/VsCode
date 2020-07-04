@@ -1,0 +1,1 @@
+//课程主要讲解了JavaScript中的变量，数据类型，函数、DOM操作以及window对象等

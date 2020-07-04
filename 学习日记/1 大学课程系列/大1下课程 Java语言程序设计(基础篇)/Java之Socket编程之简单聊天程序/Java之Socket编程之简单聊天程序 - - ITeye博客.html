@@ -1,0 +1,1567 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0043)https://www.iteye.com/blog/lixh1986-2348001 -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" dir="ltr" data-blockbyte-bs-uid="11699"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <title>
+    Java之Socket编程之简单聊天程序 -  - ITeye博客
+  </title>
+  <meta name="description" content="一、界面截图： 二、代码： 1、ChatServer.java     package com.lixh1986.socket.server;    import java.io.IOException;  import java.net.ServerSocket;  import java.util.ArrayList;    import com.lixh1986.socket.model.Se ...">
+  <meta name="keywords" content="java, socket, 编程, 聊天 Java之Socket编程之简单聊天程序">
+  <meta name="report" content="{&quot;pid&quot;:&quot;iteye&quot;}">
+  <link rel="shortcut icon" href="https://www.iteye.com/images/favicon.ico" type="image/x-icon">
+  <link rel="search" type="application/opensearchdescription+xml" href="https://www.iteye.com/open_search.xml" title="ITeye">
+  <link href="https://www.iteye.com/rss" rel="alternate" title="" type="application/rss+xml">
+  <link href="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/blog.css" media="screen" rel="stylesheet" type="text/css">
+<link href="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/blue.css" media="screen" rel="stylesheet" type="text/css">
+  <script src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/hm.js.下载"></script><script src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/application.js.下载" type="text/javascript"></script>
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?e19a8b00cf63f716d774540875007664";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+<style>
+/* 折叠效果 */
+.hide-main-content{
+    position: relative;
+}
+.hide-article-box {
+    display: none;
+    position: absolute;
+    z-index: 9999;
+    bottom: -1px;
+    width: 100%;
+    padding-top: 160px;
+    background-image: -webkit-gradient(linear,left top, left bottom,from(rgba(255,255,255,0)),color-stop(70%, #fff));
+    background-image: linear-gradient(-180deg,rgba(255,255,255,0) 0%,#fff 70%);
+}
+.hide-article-box #btn-readmore{
+    color: #ca0c16;
+    border: 1px solid #ca0c16;
+    margin: 10px auto;
+    padding: 0 8px;
+    display: block;
+    font-size: 14px;
+    border-radius: 4px;
+    text-align: center;
+    background-color: transparent;
+    height: 34px;
+    width: 74px;
+    line-height: 32px;
+    min-width: 72px;
+    cursor: pointer;
+}
+.hide-article-box #btn-readmore:hover{
+    background: #ca0c16;
+    color:#fff;
+    text-decoration: none;
+}
+</style>
+<!-- 因INS广告原因 需要提前引入jquery -->
+<script src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/jquery-1.11.1.min.js.下载" type="text/javascript"></script>
+<script type="text/javascript">var jQuery = jQuery.noConflict();// 解决jq与prototype.js命名空间冲突的问题</script>
+<script src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/fixed-sidebar.js.下载" type="text/javascript"></script>
+
+    <link href="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/SyntaxHighlighter.css" media="screen" rel="stylesheet" type="text/css">
+  <script src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/shCoreCommon.js.下载" type="text/javascript"></script>
+<script src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/hotkey.js.下载" type="text/javascript"></script>
+  <script src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/code_favorites.js.下载" type="text/javascript"></script>
+<script src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/weiboshare.js.下载" type="text/javascript"></script>
+
+  <!-- 请置于所有广告位代码之前 -->
+  <script src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/ds.js.下载"></script>
+  <link ref="canonical" href="http://www.iteye.com/blog/lixh1986-2348001">
+  <script src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/c.js.下载"></script><style type="text/css">.dp-j .annotation { color: #646464; }.dp-j .number { color: #C00000; }</style><style type="text/css">.dp-j .annotation { color: #646464; }.dp-j .number { color: #C00000; }</style><style type="text/css">.dp-j .annotation { color: #646464; }.dp-j .number { color: #C00000; }</style><style type="text/css">.dp-j .annotation { color: #646464; }.dp-j .number { color: #C00000; }</style><link rel="stylesheet" type="text/css" href="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/recommend.css"><link rel="stylesheet" type="text/css" href="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/iconfont.css"><link type="text/css" rel="stylesheet" charset="UTF-8" href="https://translate.googleapis.com/translate_static/css/translateelement.css"><style class="blockbyte-bs-style" data-name="content">body>div#blockbyte-bs-indicator>div{opacity:0;pointer-events:none}body>iframe#blockbyte-bs-sidebar.blockbyte-bs-visible,body>iframe#blockbyte-bs-overlay.blockbyte-bs-visible{opacity:1;pointer-events:auto}body.blockbyte-bs-noscroll{overflow:hidden !important}body>div#blockbyte-bs-indicator>div{position:absolute;transform:translate3d(-40px, 0, 0);top:0;left:0;width:40px !important;height:100%;background:rgba(0,0,0,0.5);border-radius:0 10px 10px 0;transition:opacity 0.3s, transform 0.3s;z-index:2}body>div#blockbyte-bs-indicator>div>span{-webkit-mask:no-repeat center/32px;-webkit-mask-image:url(chrome-extension://jdbnofccmhefkmjbkkdkfiicjkgofkdh/img/icon-bookmark.svg);background-color:#ffffff;position:absolute;display:block;top:0;left:0;width:100%;height:100%}body>div#blockbyte-bs-indicator[data-pos='right']{left:auto;right:0}body>div#blockbyte-bs-indicator[data-pos='right']>div{transform:translate3d(40px, 0, 0);left:auto;right:0;border-radius:10px 0 0 10px}body>div#blockbyte-bs-indicator.blockbyte-bs-fullHeight>div{border-radius:0}body>div#blockbyte-bs-indicator.blockbyte-bs-hover>div{transform:translate3d(0, 0, 0);opacity:1}body>div#blockbyte-bs-indicator[data-pos='left'].blockbyte-bs-has-lsb{height:100% !important;top:0 !important}body>div#blockbyte-bs-indicator[data-pos='left'].blockbyte-bs-has-lsb>div{background:transparent}body>div#blockbyte-bs-indicator[data-pos='left'].blockbyte-bs-has-lsb>div>span{-webkit-mask-position-y:20px}body>iframe#blockbyte-bs-sidebar{width:350px;max-width:none;height:0;z-index:2147483646;background-color:rgba(0,0,0,0.6) !important;border:none;display:block !important;transform:translate3d(-350px, 0, 0);transition:width 0s 0.3s, height 0s 0.3s, opacity 0.3s, transform 0.3s}body>iframe#blockbyte-bs-sidebar[data-pos='right']{left:auto;right:0;transform:translate3d(350px, 0, 0)}body>iframe#blockbyte-bs-sidebar.blockbyte-bs-visible{width:calc(100% + 350px);height:100%;transform:translate3d(0, 0, 0);transition:opacity 0.3s, transform 0.3s}body>iframe#blockbyte-bs-sidebar.blockbyte-bs-hideMask{background:none !important}body>iframe#blockbyte-bs-sidebar.blockbyte-bs-hideMask:not(.blockbyte-bs-hover){width:calc(350px + 50px)}body>iframe#blockbyte-bs-overlay{width:100%;max-width:none;height:100%;z-index:2147483647;border:none;background:rgba(0,0,0,0.5) !important;transition:opacity 0.3s}
+</style></head><body><svg aria-hidden="true" style="position: absolute; width: 0px; height: 0px; overflow: hidden;"><symbol id="fanyi" viewBox="0 0 1084 1024"><path d="M602.416429 647.439059v75.390494h120.470588v-120.470588h-75.029082l195.493647-193.939577V481.882353h180.597459c33.322165 0 60.289506 26.967341 60.289506 60.235294 0 0.722824-0.012047 1.439624-0.036141 2.1504v236.640377c0.024094 0.710776 0.036141 1.427576 0.036141 2.1504 0 33.261929-26.967341 60.235294-60.235294 60.235294H843.357606v120.470588c0 33.261929-26.967341 60.229271-60.235294 60.22927s-60.235294-26.967341-60.235295-60.235294v-120.470588H542.090782c-33.267953 0-60.235294-26.967341-60.235294-60.235294l0.006024-16.022588 120.554917-119.597177z m240.935153-45.080094v120.470588h120.380235v-120.470588h-120.380235z m-403.534306-46.585977l-27.732329-67.861082H186.479676l-70.716235 167.936c-12.9024 30.659765-48.224376 45.056-78.884141 32.141553-30.659765-12.908424-45.049976-48.2304-32.141553-78.890165l240.941176-572.223247A60.253365 60.253365 0 0 1 301.782076 0.006024a60.253365 60.253365 0 0 1 56.380236 37.466352l174.242635 426.429742 352.798117-350.033318c23.612235-23.431529 61.7472-23.280941 85.17873 0.331294 23.431529 23.612235 23.280941 61.753224-0.331294 85.184753L200.394029 963.029835c-23.612235 23.431529-61.753224 23.280941-85.184753-0.331294-23.431529-23.612235-23.280941-61.753224 0.337318-85.184753l324.270682-321.7408z m-138.842353-339.787294L237.209841 367.441318H362.860664L300.974923 215.979671z"></path></symbol><symbol id="shouji" viewBox="0 0 1024 1024"><path d="M768 670.72V102.4H256v568.32h512z m0 51.2H256v199.68h512v-199.68z m102.4-619.52v819.2c0 56.55552-45.84448 102.4-102.4 102.4H256c-56.55552 0-102.4-45.84448-102.4-102.4V102.4C153.6 45.84448 199.44448 0 256 0h512c56.55552 0 102.4 45.84448 102.4 102.4zM512 870.4c-28.27776 0-51.2-22.92224-51.2-51.2s22.92224-51.2 51.2-51.2 51.2 22.92224 51.2 51.2-22.92224 51.2-51.2 51.2z"></path></symbol><symbol id="yuedushu" viewBox="0 0 1462 1024"><path d="M731.428571 1024c-259.320686 0-495.879314-146.753829-709.668571-440.246857-29.015771-39.840914-29.015771-103.665371 0-143.506286C235.556571 146.761143 472.107886 0 731.428571 0c259.320686 0 495.879314 146.753829 709.668572 440.246857 29.015771 39.840914 29.015771 103.665371 0 143.506286C1227.300571 877.238857 990.749257 1024 731.428571 1024z m0-841.142857c-195.2256 0-375.632457 107.132343-545.865142 329.142857 170.232686 222.010514 350.639543 329.142857 545.865142 329.142857 195.2256 0 375.632457-107.132343 545.865143-329.142857C1107.053714 289.989486 926.646857 182.857143 731.428571 182.857143z m0 621.714286c-161.579886 0-292.571429-130.991543-292.571428-292.571429s130.991543-292.571429 292.571428-292.571429 292.571429 130.991543 292.571429 292.571429-130.991543 292.571429-292.571429 292.571429z m0-182.857143c60.591543 0 109.714286-49.122743 109.714286-109.714286 0-60.591543-49.122743-109.714286-109.714286-109.714286-60.591543 0-109.714286 49.122743-109.714285 109.714286 0 60.591543 49.122743 109.714286 109.714285 109.714286z"></path></symbol></svg><script onload="window[&#39;cambrian_sync_loader_success1571108917901117&#39;]()" onerror="window[&#39;cambrian_sync_loader_fail_1571108917901117&#39;]()" src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/main.833c272c.js.下载"></script>
+  <script src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/recommend.js.下载"></script><script language="javascript" src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/iconfont.js.下载"></script>
+
+
+
+  <div id="header">
+    <div id="blog_site_nav">
+  <a href="https://www.iteye.com/" class="homepage">首页</a>
+  <a href="https://www.iteye.com/news">资讯</a>
+  <a href="https://www.iteye.com/magazines">精华</a>
+  <a href="https://www.iteye.com/forums">论坛</a>
+  <a href="https://www.iteye.com/ask">问答</a>
+  <a href="https://www.iteye.com/blogs">博客</a>
+  <a href="https://www.iteye.com/blogs/subjects">专栏</a>
+  <a href="https://www.iteye.com/groups">群组</a>
+  <a href="https://www.iteye.com/resources">下载</a>
+</div>
+
+    <div id="user_nav">
+
+      <a href="https://www.iteye.com/login" class="welcome" title="登录">您还未登录!</a>
+    <a href="https://www.iteye.com/login">登录</a>
+    <a href="https://www.iteye.com/signup" class="nobg">注册</a>
+    <!--<a href="https://passport.csdn.net/account/mobileregister?from=https://www.iteye.com">注册</a>-->
+  </div>
+
+
+  </div>
+
+  <div id="page">
+<!--    <div id="branding" class="clearfix">-->
+<!--      <div id="blog_name">-->
+<!--        <h1><a href="/">-->
+<!--            </a></h1>-->
+<!--      </div>-->
+<!--      <div id='fd'></div>-->
+<!--      <div id="blog_navbar">-->
+<!--        <ul>-->
+          
+          
+          
+          
+          
+          
+<!--        </ul>-->
+
+<!--        <div class="search">-->
+<!--          <form action="/blog/search" method="get">-->
+<!--            <input class="search_text" id="query" name="query" style="margin-left: 10px;width: 110px;" type="text"-->
+<!--              value="" />-->
+<!--            <input class="submit_search" type="submit" value="" />-->
+<!--          </form>-->
+<!--        </div>-->
+<!--        <div id="fd"></div>-->
+<!--      </div>-->
+<!--    </div>-->
+    `
+    <div id="content" class="clearfix">
+      <div id="local">
+        <div class="local_top"></div>
+        <div id="blog_owner">
+  <div id="blog_owner_logo"><a href="https://www.iteye.com/blog/user/lixh1986"><img alt="Lixh1986的博客" class="logo" src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/21ea6d9d-9f64-3b84-9df3-fdc2b278a644.png" title="Lixh1986的博客: " width=""></a></div>
+  <div id="blog_owner_name">Lixh1986</div>
+</div>
+
+        <div id="blog_actions">
+          <ul>
+            <li>浏览:
+              778044 次</li>
+            
+            
+            <li>
+              <img src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/offline.gif">
+            </li>
+            
+          </ul>
+        </div>
+
+        <div id="user_visits" class="clearfix">
+          <h5>最近访客 <span style="font-weight:normal;font-size:12px;padding-left:30px;">
+              <a href="https://www.iteye.com/blog/user_visits">更多访客&gt;&gt;</a></span></h5>
+          
+          <div class="user_visit">
+            <div class="logo"><a href="https://www.iteye.com/blog/user/q7887856" target="_blank"><img alt="双人可卿的博客" class="logo" src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/user-logo-thumb.gif" title="双人可卿的博客: " width="48px"></a></div>
+            <div class="left">
+              <a href="https://www.iteye.com/blog/user/q7887856" target="_blank" title="双人可卿">双人可卿</a>
+            </div>
+          </div>
+          
+          <div class="user_visit">
+            <div class="logo"><a href="https://www.iteye.com/blog/user/mr-wangxw" target="_blank"><img alt="MR.wangxw的博客" class="logo" src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/user-logo-thumb.gif" title="MR.wangxw的博客: " width="48px"></a></div>
+            <div class="left">
+              <a href="https://www.iteye.com/blog/user/mr-wangxw" target="_blank" title="MR.wangxw">MR.wangxw</a>
+            </div>
+          </div>
+          
+          <div class="user_visit">
+            <div class="logo"><a href="https://www.iteye.com/blog/user/act" target="_blank"><img alt="foxinmy的博客" class="logo" src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/adc6ef88-931f-3a54-9a7f-39ab47ea2bec-thumb.jpg" title="foxinmy的博客: HelloWorld" width="48px"></a></div>
+            <div class="left">
+              <a href="https://www.iteye.com/blog/user/act" target="_blank" title="foxinmy">foxinmy</a>
+            </div>
+          </div>
+          
+          <div class="user_visit">
+            <div class="logo"><a href="https://www.iteye.com/blog/user/1904150756" target="_blank"><img alt="野生的龙猫的博客" class="logo" src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/user-logo-thumb.gif" title="野生的龙猫的博客: " width="48px"></a></div>
+            <div class="left">
+              <a href="https://www.iteye.com/blog/user/1904150756" target="_blank" title="野生的龙猫">野生的龙猫</a>
+            </div>
+          </div>
+          
+        </div>
+
+        <div id="user_title_list" class="clearfix">
+          <h5>博主相关</h5>
+          <li>
+            <a href="https://www.iteye.com/blog/user/lixh1986">博客</a>
+          </li>
+
+          <li>
+            <a href="https://www.iteye.com/weibo">微博</a>
+          </li>
+
+          <li>
+            <a href="https://www.iteye.com/album">相册</a>
+          </li>
+
+          <li>
+            <a href="https://www.iteye.com/link">收藏</a>
+          </li>
+
+          <li>
+            <a href="https://www.iteye.com/blog/guest_book">留言</a>
+          </li>
+
+          <li>
+            <a href="https://www.iteye.com/blog/profile">关于我</a>
+          </li>
+        </div>
+
+        
+
+                <div id="blog_menu">
+          <h5>文章分类</h5>
+          <ul>
+            <li>
+              <a href="https://www.iteye.com/">全部博客 (370)</a>
+            </li>
+            
+            <li>
+              <a href="https://www.iteye.com/category/256846">S2SH (16)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/258307">stuts2 (0)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/258452">java语言 (75)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/258678">JSP (17)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/259928">&lt;html&gt;元素 (11)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/260898">javaweb (4)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/262860">web容器 (3)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/282314">ext (23)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/283112">javaScript (48)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/284358">ant (1)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/290845">liferay (1)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/292122">sql (9)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/293448">css (40)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/294091">浏览器设置 (3)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/298468">office_world (1)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/318625">eclipse (4)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/319184">其它 (28)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/322806">操作系统 (5)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/325515">android (6)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/362511">Struts2 (11)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/363346">RegEx (3)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/363378">mysql (5)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/363617">BigDATA (1)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/363889">Node.js (1)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/366906">Algorithm (10)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/367500">Apache Spark (1)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/369456">数据库 (5)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/370382">linux (2)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/371585">git (1)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/372301">Adobe (3)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/372958">java语言，WebSocket (1)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/373877">Maven (3)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/373882">SHELL (1)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/374025">XML (2)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/374988">数学 (2)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/375688">Python (2)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/375737">Java_mysql (1)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/376407">ReactJS (6)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/377413">养生 (4)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/377471">Docker (1)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/377626">Protocols (3)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/378911">java8 (2)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/378970">书籍 (1)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/379723">Gradle (2)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/379906">AngularJS (5)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/380174">SpringMVC (2)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/380636">SOAP (1)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/381138">BootstrapCSS (1)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/381529">HTTP协议 (1)</a>
+              </li>
+              
+            <li>
+              <a href="https://www.iteye.com/category/382370">OAuth2 (1)</a>
+              </li>
+              
+          </ul>
+        </div>
+        <div id="month_blogs">
+          <h5>社区版块</h5>
+          <ul>
+            <li>
+              <a href="https://www.iteye.com/blog/news">我的资讯</a> (
+              0)</li>
+            <li>
+              <a href="https://www.iteye.com/blog/post">我的论坛</a> (
+              0)
+            </li>
+            <li>
+              <a href="https://www.iteye.com/blog/answered_problems">我的问答</a> (
+              0)</li>
+          </ul>
+        </div>
+        <div id="month_blogs">
+          <h5>存档分类</h5>
+          <ul>
+            
+            <li>
+              <a href="https://www.iteye.com/blog/monthblog/2019-07">2019-07</a>
+              (
+              2)</li>
+            
+            <li>
+              <a href="https://www.iteye.com/blog/monthblog/2019-06">2019-06</a>
+              (
+              3)</li>
+            
+            <li>
+              <a href="https://www.iteye.com/blog/monthblog/2019-03">2019-03</a>
+              (
+              3)</li>
+            
+            <li>
+              <a href="https://www.iteye.com/blog/monthblog_more">更多存档...</a>
+            </li>
+          </ul>
+        </div>
+        
+        
+
+        <div id="guest_books">
+          <h5>最新评论</h5>
+          <ul>
+            
+            <li>
+              <a href="https://www.iteye.com/blog/user/lixh1986" target="_blank" title="Lixh1986">Lixh1986</a>：
+              Java并发编程：自己动手写一把可重入锁https://blo ...<br>
+              <a href="https://www.iteye.com/blog/2351294#bc2403837">Java之多线程之Lock与Condition</a>
+            </li>
+            
+            <li>
+              <a href="https://www.iteye.com/blog/user/lixh1986" target="_blank" title="Lixh1986">Lixh1986</a>：
+              http://win.51apps.com.cn/https: ...<br>
+              <a href="https://www.iteye.com/blog/2370706#bc2403557">temp</a>
+            </li>
+            
+            <li>
+              <a href="https://www.iteye.com/blog/user/ztwsl" target="_blank" title="ztwsl">ztwsl</a>：
+              不错，支持很好<br>
+              <a href="https://www.iteye.com/blog/1765667#bc2397626">HttpServletRequest和ServletRequest的区别</a>
+            </li>
+            
+            <li>
+              <a href="https://www.iteye.com/blog/user/guodongkai" target="_blank" title="guodongkai">guodongkai</a>：
+               谢谢您能将知识精华汇编总结，让初学者们从原理中学会和提高。<br>
+              <a href="https://www.iteye.com/blog/1947017#bc2371059">javaScript之function定义</a>
+            </li>
+            
+            <li>
+              <a href="https://www.iteye.com/blog/user/kangwen23" target="_blank" title="kangwen23">kangwen23</a>：
+              谢谢了，顶顶<br>
+              <a href="https://www.iteye.com/blog/1739254#bc2319697">struts2中的ValueStack学习</a>
+            </li>
+            
+          </ul>
+        </div>
+
+        <div class="local_bottom"></div>
+        
+        <div id="nav_show_top_stop" style="position: fixed; top: 3086px;">
+            <div>
+              <!-- 广告位：PC端-iteye博客详情页左侧Button1-200*200 -->
+              
+              <!-- Ads ID 423 -->
+              
+                <div style="text-align: center">
+                  <div id="kp_box_423" data-pid="423"><iframe src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/saved_resource.html" frameborder="0" width="300px" height="250px" scrolling="no" style="display: none !important;"></iframe><img class="pre-img-lasy" data-src="https://kunyu.csdn.net/1.png?d=2&amp;k=&amp;m=JnLJcLESAiDUbJHpEpinpLctLpEitAUmnLiiiHcbpEDLySinpntmHifnDAJpbnpbULSpJHEtSXfQHJttQpWbpLbSnJbctiHcnJQQ"></div>
+                </div>
+              
+            </div>
+            <div>
+              <!-- 广告位：PC端-iteye博客详情页左侧Button2-200*200 -->
+              
+              <!-- Ads ID 424 -->
+              
+                <div style="text-align: center">
+                  <div id="kp_box_424" data-pid="424"><iframe src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/saved_resource(1).html" frameborder="0" width="300px" height="250px" scrolling="no" style="display: none !important;"></iframe><img class="pre-img-lasy" data-src="https://kunyu.csdn.net/1.png?d=2&amp;k=&amp;m=tbJpibcintAvpUbJiHcLJoDtLHcALSSJDpnUnpbmSiHEfnDfiSibpiJEiiHAvoJpiLnXHEbEbELpSppiQWScJiJSSHEcEbLSLpQQ"></div>
+                </div>
+              
+            </div>
+          </div>
+      </div>
+      
+      <div id="main" class="">
+        
+
+
+
+        
+
+
+<div class="h-entry" style="display:none">
+  <a href="https://www.iteye.com/blog/user/lixh1986" class="p-author" target="_blank">Lixh1986</a>
+</div>
+
+
+<div class="blog_main">
+  <script type="application/ld+json">
+    {
+        "@context": "https://zhanzhang.baidu.com/contexts/cambrian.jsonld",
+        "@id": "http://www.iteye.com/blog/lixh1986-2348001",
+        "title": "Java之Socket编程之简单聊天程序",
+        "images": [],
+        "description": "",
+        "pubDate": "2016-12-29T10:50:18"
+    }
+  </script>
+  <div class="blog_title">
+    <h3>
+      Java之Socket编程之简单聊天程序
+      <em class="actions">      </em>
+    </h3>
+    <ul class="blog_categories"><strong>博客分类：</strong> <li><a href="https://www.iteye.com/category/258452">java语言</a></li> </ul>
+        <div class="news_tag"><a href="http://www.iteye.com/blogs/tag/java">java</a><a href="http://www.iteye.com/blogs/tag/socket">socket</a><a href="http://www.iteye.com/blogs/tag/%E7%BC%96%E7%A8%8B">编程</a><a href="http://www.iteye.com/blogs/tag/%E8%81%8A%E5%A4%A9">聊天</a>&nbsp;</div>
+  </div>
+
+  <div id="blog_content" class="hide-main-content">
+    <div class="hide-article-box text-center" style="display: none;">
+      <a class="btn" id="btn-readmore">阅读更多</a>
+    </div>
+    <span style="font-size: medium;"><strong>一、界面截图：</strong></span>
+<br>
+<br><img src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/07352c68-d489-30dd-b739-acb35d5a443b.png">
+<br>
+<br>
+<br><span style="font-size: medium;"><strong>二、代码：</strong></span>
+<br>
+<br>
+<br><strong>1、ChatServer.java</strong>
+<br><div class="dp-highlighter" id=""><div class="bar"><div class="tools">Java代码 <embed wmode="transparent" src="/javascripts/syntaxhighlighter/clipboard_new.swf" width="14" height="15" flashvars="clipboard=%0Apackage%20com.lixh1986.socket.server%3B%0A%0Aimport%20java.io.IOException%3B%0Aimport%20java.net.ServerSocket%3B%0Aimport%20java.util.ArrayList%3B%0A%0Aimport%20com.lixh1986.socket.model.ServerSideSocket%3B%0A%0Apublic%20class%20ChatServer%20%7B%0A%20%20%20%20%0A%20%20%20%20%40SuppressWarnings(%22resource%22)%0A%20%20%20%20public%20static%20void%20main(String%5B%5D%20args)%20%7B%0A%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20ArrayList%3CServerSideSocket%3E%20pool%20%3D%20new%20ArrayList%3CServerSideSocket%3E()%3B%20%0A%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20try%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20ServerSocket%20serverSocket%20%3D%20new%20ServerSocket(9999)%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20System.out.println(%22Server%20starts%20up!%22)%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20while(true)%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%2F**%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20*%20ServerSocket.accept()%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20*%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Listens%20for%20a%20connection%20to%20be%20made%20to%20this%20socket%20and%20accepts%20it.%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20The%20method%20blocks%20until%20a%20connection%20is%20made.%20%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20A%20new%20Socket%20corresponding%20to%20the%20client%20socket%20is%20created%2C%20and%20this%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20socket%20will%20be%20used%20for%20making%20communication%20with%20the%20client%20socket.%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20*%2F%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20ServerSideSocket%20serverSideSocket%20%3D%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20new%20ServerSideSocket(pool%2C%20serverSocket.accept())%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Thread%20t%20%3D%20new%20Thread(serverSideSocket)%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20System.out.println(%22socket%20thread%3A%20%22%20%2B%20t.getName()%20%2B%20%22%20starts%20serving.%22)%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20t.start()%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%7D%20catch%20(IOException%20e)%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20e.printStackTrace()%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%0A%20%20%20%20%7D%0A%0A%7D%0A%0A%0A" quality="high" allowscriptaccess="always" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer">&nbsp;<a href="javascript:void()" title="收藏这段代码" onclick="code_favorites_do_favorite(this);return false;"><img class="star" src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/icon_star.png" alt="收藏代码"><img class="spinner" src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/spinner.gif" style="display:none"></a></div></div><ol start="1" class="dp-j"><li><span><span class="keyword">package</span><span>&nbsp;com.lixh1986.socket.server;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span><span class="keyword">import</span><span>&nbsp;java.io.IOException;&nbsp;&nbsp;</span></span></li><li><span><span class="keyword">import</span><span>&nbsp;java.net.ServerSocket;&nbsp;&nbsp;</span></span></li><li><span><span class="keyword">import</span><span>&nbsp;java.util.ArrayList;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span><span class="keyword">import</span><span>&nbsp;com.lixh1986.socket.model.ServerSideSocket;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span><span class="keyword">public</span><span>&nbsp;</span><span class="keyword">class</span><span>&nbsp;ChatServer&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="annotation">@SuppressWarnings</span><span>(</span><span class="string">"resource"</span><span>)&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span><span>&nbsp;</span><span class="keyword">static</span><span>&nbsp;</span><span class="keyword">void</span><span>&nbsp;main(String[]&nbsp;args)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ArrayList&lt;ServerSideSocket&gt;&nbsp;pool&nbsp;=&nbsp;<span class="keyword">new</span><span>&nbsp;ArrayList&lt;ServerSideSocket&gt;();&nbsp;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">try</span><span>&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ServerSocket&nbsp;serverSocket&nbsp;=&nbsp;<span class="keyword">new</span><span>&nbsp;ServerSocket(</span><span class="number">9999</span><span>);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="string">"Server&nbsp;starts&nbsp;up!"</span><span>);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">while</span><span>(</span><span class="keyword">true</span><span>){&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">/**</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;ServerSocket.accept();</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Listens&nbsp;for&nbsp;a&nbsp;connection&nbsp;to&nbsp;be&nbsp;made&nbsp;to&nbsp;this&nbsp;socket&nbsp;and&nbsp;accepts&nbsp;it.&nbsp;</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;method&nbsp;blocks&nbsp;until&nbsp;a&nbsp;connection&nbsp;is&nbsp;made.&nbsp;</span>&nbsp;</span></li><li><span><span class="comment"></span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A&nbsp;new&nbsp;Socket&nbsp;corresponding&nbsp;to&nbsp;the&nbsp;client&nbsp;socket&nbsp;is&nbsp;created,&nbsp;and&nbsp;this</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;socket&nbsp;will&nbsp;be&nbsp;used&nbsp;for&nbsp;making&nbsp;communication&nbsp;with&nbsp;the&nbsp;client&nbsp;socket.&nbsp;</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ServerSideSocket&nbsp;serverSideSocket&nbsp;=&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">new</span><span>&nbsp;ServerSideSocket(pool,&nbsp;serverSocket.accept());&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Thread&nbsp;t&nbsp;=&nbsp;<span class="keyword">new</span><span>&nbsp;Thread(serverSideSocket);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="string">"socket&nbsp;thread:&nbsp;"</span><span>&nbsp;+&nbsp;t.getName()&nbsp;+&nbsp;</span><span class="string">"&nbsp;starts&nbsp;serving."</span><span>);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;t.start();&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="keyword">catch</span><span>&nbsp;(IOException&nbsp;e)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e.printStackTrace();&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>}&nbsp;&nbsp;</span></li></ol></div><pre class="java" name="code" style="display: none;">
+package com.lixh1986.socket.server;
+
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.util.ArrayList;
+
+import com.lixh1986.socket.model.ServerSideSocket;
+
+public class ChatServer {
+    
+    @SuppressWarnings("resource")
+    public static void main(String[] args) {
+        
+        ArrayList&lt;ServerSideSocket&gt; pool = new ArrayList&lt;ServerSideSocket&gt;(); 
+        
+        try {
+            
+            ServerSocket serverSocket = new ServerSocket(9999);
+            
+            System.out.println("Server starts up!");
+            
+            while(true){
+                /**
+                 * ServerSocket.accept();
+                 *
+                 Listens for a connection to be made to this socket and accepts it. 
+                 The method blocks until a connection is made. 
+
+                 A new Socket corresponding to the client socket is created, and this
+                 socket will be used for making communication with the client socket. 
+                 
+                 */
+                ServerSideSocket serverSideSocket = 
+                    new ServerSideSocket(pool, serverSocket.accept());
+                Thread t = new Thread(serverSideSocket);
+                System.out.println("socket thread: " + t.getName() + " starts serving.");
+                t.start();
+            }
+            
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+    }
+
+}
+
+
+</pre>
+<br>
+<br><strong>2、ServerSideSocket.java</strong>
+<br><div class="dp-highlighter" id=""><div class="bar"><div class="tools">Java代码 <embed wmode="transparent" src="/javascripts/syntaxhighlighter/clipboard_new.swf" width="14" height="15" flashvars="clipboard=%0Apackage%20com.lixh1986.socket.model%3B%0A%0Aimport%20java.io.IOException%3B%0Aimport%20java.net.Socket%3B%0Aimport%20java.util.ArrayList%3B%0A%0Apublic%20class%20ServerSideSocket%20implements%20Runnable%20%7B%0A%20%20%20%20%0A%20%20%20%20private%20Socket%20socket%3B%20%20%20%20%0A%20%20%20%20private%20ArrayList%3CServerSideSocket%3E%20pool%3B%0A%20%20%20%20%0A%20%0A%20%20%20%20public%20ServerSideSocket(ArrayList%3CServerSideSocket%3E%20pool%2C%20Socket%20socket)%7B%0A%20%20%20%20%20%20%20%20this.pool%20%3D%20pool%3B%0A%20%20%20%20%20%20%20%20this.socket%20%3D%20socket%3B%0A%20%20%20%20%20%20%20%20this.pool.add(this)%3B%0A%20%20%20%20%20%20%20%20System.out.println(%22A%20client%20connected!%22)%3B%0A%20%20%20%20%7D%0A%20%20%20%20%0A%20%20%20%20%0A%20%20%20%20%40Override%0A%20%20%20%20public%20void%20run()%20%7B%0A%20%20%20%20%20%20%20%20receiveMessage()%3B%0A%20%20%20%20%7D%0A%20%20%20%20%0A%20%20%20%20%2F**%0A%20%20%20%20%20*%20read%20data%20from%20ClientSideSocket.%0A%20%20%20%20%20*%2F%0A%20%20%20%20private%20void%20receiveMessage()%7B%0A%20%20%20%20%20%20%20%20try%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20byte%5B%5D%20bytes%20%3D%20new%20byte%5B1024%5D%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20int%20n%20%3D%200%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20boolean%20isUserSendQuit%20%3D%20false%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20while(!isUserSendQuit)%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20while%20(%20(n%20%3D%20socket.getInputStream().read(bytes))%20!%3D%20-1)%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20String%20str%20%3D%20new%20String%20(bytes%2C%200%2C%20n)%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%2F%2F%20broadcast%20this%20message%20to%20other%20client.%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20for(ServerSideSocket%20otherSocket%20%3A%20pool)%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20if(this%20!%3D%20otherSocket)%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20otherSocket.writeMessage(str)%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%7D%20catch%20(IOException%20e1)%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20System.out.println(%22receiveMessage%3A%22)%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20System.out.println(%22A%20client%20disconnected!%22)%3B%0A%20%20%20%20%20%20%20%20%7Dfinally%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20disconnect()%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%20%20%0A%20%20%20%20%0A%20%20%20%20%2F**%0A%20%20%20%20%20*%20write%20data%20to%20ClientSideSocket.%0A%20%20%20%20%20*%20%40param%20message%0A%20%20%20%20%20*%2F%0A%20%20%20%20public%20void%20writeMessage(String%20message)%7B%0A%20%20%20%20%20%20%20%20try%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20socket.getOutputStream().write(message.getBytes())%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20socket.getOutputStream().flush()%3B%0A%20%20%20%20%20%20%20%20%7D%20catch%20(IOException%20e1)%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20System.out.println(%22writeMessage%3A%22)%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20System.out.println(%22A%20client%20disconnected!%22)%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20disconnect()%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%20%0A%20%20%20%20%0A%20%20%20%20private%20void%20disconnect()%7B%0A%20%20%20%20%20%20%20%20if(pool.remove(this))%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20System.out.println(%22A%20client%20is%20removed%20successfully!%22)%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20System.out.println(%22pool%20size%3A%20%22%20%2B%20pool.size())%3B%0A%20%20%20%20%20%20%20%20%7Delse%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20System.out.println(%22A%20client%20is%20not%20removed!%22)%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20try%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20if(socket%20!%3D%20null)%20socket.close()%3B%0A%20%20%20%20%20%20%20%20%7D%20catch%20(IOException%20e)%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20e.printStackTrace()%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%0A%7D%0A%0A%0A" quality="high" allowscriptaccess="always" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer">&nbsp;<a href="javascript:void()" title="收藏这段代码" onclick="code_favorites_do_favorite(this);return false;"><img class="star" src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/icon_star.png" alt="收藏代码"><img class="spinner" src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/spinner.gif" style="display:none"></a></div></div><ol start="1" class="dp-j"><li><span><span class="keyword">package</span><span>&nbsp;com.lixh1986.socket.model;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span><span class="keyword">import</span><span>&nbsp;java.io.IOException;&nbsp;&nbsp;</span></span></li><li><span><span class="keyword">import</span><span>&nbsp;java.net.Socket;&nbsp;&nbsp;</span></span></li><li><span><span class="keyword">import</span><span>&nbsp;java.util.ArrayList;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span><span class="keyword">public</span><span>&nbsp;</span><span class="keyword">class</span><span>&nbsp;ServerSideSocket&nbsp;</span><span class="keyword">implements</span><span>&nbsp;Runnable&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;Socket&nbsp;socket;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;ArrayList&lt;ServerSideSocket&gt;&nbsp;pool;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span><span>&nbsp;ServerSideSocket(ArrayList&lt;ServerSideSocket&gt;&nbsp;pool,&nbsp;Socket&nbsp;socket){&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span><span>.pool&nbsp;=&nbsp;pool;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span><span>.socket&nbsp;=&nbsp;socket;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span><span>.pool.add(</span><span class="keyword">this</span><span>);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="string">"A&nbsp;client&nbsp;connected!"</span><span>);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="annotation">@Override</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span><span>&nbsp;</span><span class="keyword">void</span><span>&nbsp;run()&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;receiveMessage();&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">/**</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;read&nbsp;data&nbsp;from&nbsp;ClientSideSocket.</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;</span><span class="keyword">void</span><span>&nbsp;receiveMessage(){&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">try</span><span>&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">byte</span><span>[]&nbsp;bytes&nbsp;=&nbsp;</span><span class="keyword">new</span><span>&nbsp;</span><span class="keyword">byte</span><span>[</span><span class="number">1024</span><span>];&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">int</span><span>&nbsp;n&nbsp;=&nbsp;</span><span class="number">0</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">boolean</span><span>&nbsp;isUserSendQuit&nbsp;=&nbsp;</span><span class="keyword">false</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">while</span><span>(!isUserSendQuit){&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">while</span><span>&nbsp;(&nbsp;(n&nbsp;=&nbsp;socket.getInputStream().read(bytes))&nbsp;!=&nbsp;-</span><span class="number">1</span><span>){&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String&nbsp;str&nbsp;=&nbsp;<span class="keyword">new</span><span>&nbsp;String&nbsp;(bytes,&nbsp;</span><span class="number">0</span><span>,&nbsp;n);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;broadcast&nbsp;this&nbsp;message&nbsp;to&nbsp;other&nbsp;client.</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">for</span><span>(ServerSideSocket&nbsp;otherSocket&nbsp;:&nbsp;pool){&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>(</span><span class="keyword">this</span><span>&nbsp;!=&nbsp;otherSocket){&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;otherSocket.writeMessage(str);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="keyword">catch</span><span>&nbsp;(IOException&nbsp;e1)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="string">"receiveMessage:"</span><span>);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="string">"A&nbsp;client&nbsp;disconnected!"</span><span>);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<span class="keyword">finally</span><span>{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;disconnect();&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">/**</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;write&nbsp;data&nbsp;to&nbsp;ClientSideSocket.</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;message</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span><span>&nbsp;</span><span class="keyword">void</span><span>&nbsp;writeMessage(String&nbsp;message){&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">try</span><span>&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;socket.getOutputStream().write(message.getBytes());&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;socket.getOutputStream().flush();&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="keyword">catch</span><span>&nbsp;(IOException&nbsp;e1)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="string">"writeMessage:"</span><span>);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="string">"A&nbsp;client&nbsp;disconnected!"</span><span>);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;disconnect();&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;</span><span class="keyword">void</span><span>&nbsp;disconnect(){&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>(pool.remove(</span><span class="keyword">this</span><span>)){&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="string">"A&nbsp;client&nbsp;is&nbsp;removed&nbsp;successfully!"</span><span>);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="string">"pool&nbsp;size:&nbsp;"</span><span>&nbsp;+&nbsp;pool.size());&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<span class="keyword">else</span><span>{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="string">"A&nbsp;client&nbsp;is&nbsp;not&nbsp;removed!"</span><span>);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">try</span><span>&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>(socket&nbsp;!=&nbsp;</span><span class="keyword">null</span><span>)&nbsp;socket.close();&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="keyword">catch</span><span>&nbsp;(IOException&nbsp;e)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e.printStackTrace();&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>}&nbsp;&nbsp;</span></li></ol></div><pre class="java" name="code" style="display: none;">
+package com.lixh1986.socket.model;
+
+import java.io.IOException;
+import java.net.Socket;
+import java.util.ArrayList;
+
+public class ServerSideSocket implements Runnable {
+    
+    private Socket socket;    
+    private ArrayList&lt;ServerSideSocket&gt; pool;
+    
+ 
+    public ServerSideSocket(ArrayList&lt;ServerSideSocket&gt; pool, Socket socket){
+        this.pool = pool;
+        this.socket = socket;
+        this.pool.add(this);
+        System.out.println("A client connected!");
+    }
+    
+    
+    @Override
+    public void run() {
+        receiveMessage();
+    }
+    
+    /**
+     * read data from ClientSideSocket.
+     */
+    private void receiveMessage(){
+        try {
+            byte[] bytes = new byte[1024];
+            int n = 0;
+            boolean isUserSendQuit = false;
+            while(!isUserSendQuit){
+                while ( (n = socket.getInputStream().read(bytes)) != -1){
+                    String str = new String (bytes, 0, n);
+                    // broadcast this message to other client.
+                    for(ServerSideSocket otherSocket : pool){
+                        if(this != otherSocket){
+                            otherSocket.writeMessage(str);
+                        }
+                    }
+                }
+            }
+        } catch (IOException e1) {
+            System.out.println("receiveMessage:");
+            System.out.println("A client disconnected!");
+        }finally{
+            disconnect();
+        }
+    }
+    
+    
+    /**
+     * write data to ClientSideSocket.
+     * @param message
+     */
+    public void writeMessage(String message){
+        try {
+            socket.getOutputStream().write(message.getBytes());
+            socket.getOutputStream().flush();
+        } catch (IOException e1) {
+            System.out.println("writeMessage:");
+            System.out.println("A client disconnected!");
+            disconnect();
+        }
+    }
+   
+    
+    private void disconnect(){
+        if(pool.remove(this)){
+            System.out.println("A client is removed successfully!");
+            System.out.println("pool size: " + pool.size());
+        }else{
+            System.out.println("A client is not removed!");
+        }
+        try {
+            if(socket != null) socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+}
+
+
+</pre>
+<br>
+<br>
+<br>
+<br><strong>3、ClientSideSocket.java</strong>
+<br><div class="dp-highlighter" id=""><div class="bar"><div class="tools">Java代码 <embed wmode="transparent" src="/javascripts/syntaxhighlighter/clipboard_new.swf" width="14" height="15" flashvars="clipboard=%0Apackage%20com.lixh1986.socket.client%3B%0A%0Aimport%20java.io.IOException%3B%0Aimport%20java.net.Socket%3B%0Aimport%20java.net.UnknownHostException%3B%0Aimport%20java.util.Scanner%3B%0A%0A%40SuppressWarnings(%22resource%22)%0Apublic%20class%20ClientSideSocket%20%7B%0A%20%20%20%0A%20%20%20%20public%20static%20void%20main(String%5B%5D%20args)%20%7B%0A%20%20%20%20%20%20%20%20try%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20final%20Socket%20socket%20%3D%20new%20Socket(%22127.0.0.1%22%2C%209999)%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20final%20Scanner%20scanner%20%3D%20new%20Scanner(System.in)%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20System.out.println(%22I%20am%20a%20client!%22)%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20new%20Thread(new%20Runnable()%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%40Override%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20public%20void%20run()%20%7B%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20try%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20while(true)%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20String%20str%20%3D%20scanner.nextLine()%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20socket.getOutputStream().write(str.getBytes())%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20socket.getOutputStream().flush()%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%20catch%20(IOException%20e)%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20System.out.println(%22Writing%20Quit.%22)%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20System.exit(0)%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D).start()%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20new%20Thread(new%20Runnable()%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%40Override%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20public%20void%20run()%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20try%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20byte%5B%5D%20bytes%20%3D%20new%20byte%5B1024%5D%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20int%20n%20%3D%200%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20while(true)%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20while%20(%20(n%20%3D%20socket.getInputStream().read(bytes))%20!%3D%20-1)%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20String%20str%20%3D%20new%20String%20(bytes%2C%200%2C%20n)%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20System.out.println(str)%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%20catch%20(IOException%20e)%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20System.out.println(%22Reading%20Quit.%22)%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20System.exit(0)%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D).start()%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%7D%20catch%20(UnknownHostException%20e)%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20e.printStackTrace()%3B%0A%20%20%20%20%20%20%20%20%7D%20catch%20(IOException%20e)%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20e.printStackTrace()%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%0A%20%20%20%20%7D%0A%20%20%20%20%0A%0A%7D%0A%0A%0A" quality="high" allowscriptaccess="always" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer">&nbsp;<a href="javascript:void()" title="收藏这段代码" onclick="code_favorites_do_favorite(this);return false;"><img class="star" src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/icon_star.png" alt="收藏代码"><img class="spinner" src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/spinner.gif" style="display:none"></a></div></div><ol start="1" class="dp-j"><li><span><span class="keyword">package</span><span>&nbsp;com.lixh1986.socket.client;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span><span class="keyword">import</span><span>&nbsp;java.io.IOException;&nbsp;&nbsp;</span></span></li><li><span><span class="keyword">import</span><span>&nbsp;java.net.Socket;&nbsp;&nbsp;</span></span></li><li><span><span class="keyword">import</span><span>&nbsp;java.net.UnknownHostException;&nbsp;&nbsp;</span></span></li><li><span><span class="keyword">import</span><span>&nbsp;java.util.Scanner;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span><span class="annotation">@SuppressWarnings</span><span>(</span><span class="string">"resource"</span><span>)&nbsp;&nbsp;</span></span></li><li><span><span class="keyword">public</span><span>&nbsp;</span><span class="keyword">class</span><span>&nbsp;ClientSideSocket&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span><span>&nbsp;</span><span class="keyword">static</span><span>&nbsp;</span><span class="keyword">void</span><span>&nbsp;main(String[]&nbsp;args)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">try</span><span>&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">final</span><span>&nbsp;Socket&nbsp;socket&nbsp;=&nbsp;</span><span class="keyword">new</span><span>&nbsp;Socket(</span><span class="string">"127.0.0.1"</span><span>,&nbsp;</span><span class="number">9999</span><span>);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">final</span><span>&nbsp;Scanner&nbsp;scanner&nbsp;=&nbsp;</span><span class="keyword">new</span><span>&nbsp;Scanner(System.in);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="string">"I&nbsp;am&nbsp;a&nbsp;client!"</span><span>);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">new</span><span>&nbsp;Thread(</span><span class="keyword">new</span><span>&nbsp;Runnable()&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="annotation">@Override</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span><span>&nbsp;</span><span class="keyword">void</span><span>&nbsp;run()&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">try</span><span>&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">while</span><span>(</span><span class="keyword">true</span><span>){&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String&nbsp;str&nbsp;=&nbsp;scanner.nextLine();&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;socket.getOutputStream().write(str.getBytes());&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;socket.getOutputStream().flush();&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="keyword">catch</span><span>&nbsp;(IOException&nbsp;e)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="string">"Writing&nbsp;Quit."</span><span>);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.exit(<span class="number">0</span><span>);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}).start();&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">new</span><span>&nbsp;Thread(</span><span class="keyword">new</span><span>&nbsp;Runnable()&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="annotation">@Override</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span><span>&nbsp;</span><span class="keyword">void</span><span>&nbsp;run()&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">try</span><span>&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">byte</span><span>[]&nbsp;bytes&nbsp;=&nbsp;</span><span class="keyword">new</span><span>&nbsp;</span><span class="keyword">byte</span><span>[</span><span class="number">1024</span><span>];&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">int</span><span>&nbsp;n&nbsp;=&nbsp;</span><span class="number">0</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">while</span><span>(</span><span class="keyword">true</span><span>){&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">while</span><span>&nbsp;(&nbsp;(n&nbsp;=&nbsp;socket.getInputStream().read(bytes))&nbsp;!=&nbsp;-</span><span class="number">1</span><span>){&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String&nbsp;str&nbsp;=&nbsp;<span class="keyword">new</span><span>&nbsp;String&nbsp;(bytes,&nbsp;</span><span class="number">0</span><span>,&nbsp;n);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(str);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="keyword">catch</span><span>&nbsp;(IOException&nbsp;e)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="string">"Reading&nbsp;Quit."</span><span>);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.exit(<span class="number">0</span><span>);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}).start();&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="keyword">catch</span><span>&nbsp;(UnknownHostException&nbsp;e)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e.printStackTrace();&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="keyword">catch</span><span>&nbsp;(IOException&nbsp;e)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e.printStackTrace();&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>}&nbsp;&nbsp;</span></li></ol></div><pre class="java" name="code" style="display: none;">
+package com.lixh1986.socket.client;
+
+import java.io.IOException;
+import java.net.Socket;
+import java.net.UnknownHostException;
+import java.util.Scanner;
+
+@SuppressWarnings("resource")
+public class ClientSideSocket {
+   
+    public static void main(String[] args) {
+        try {
+            
+            final Socket socket = new Socket("127.0.0.1", 9999);
+            final Scanner scanner = new Scanner(System.in);
+            
+            System.out.println("I am a client!");
+            
+       
+            new Thread(new Runnable() {
+                @Override
+                public void run() {                        
+                    try {
+                        while(true){
+                            String str = scanner.nextLine();
+                            socket.getOutputStream().write(str.getBytes());
+                            socket.getOutputStream().flush();
+                        }
+                    } catch (IOException e) {
+                        System.out.println("Writing Quit.");
+                        System.exit(0);
+                    }
+                }
+            }).start();
+            
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        byte[] bytes = new byte[1024];
+                        int n = 0;
+                        while(true){
+                            while ( (n = socket.getInputStream().read(bytes)) != -1){
+                                String str = new String (bytes, 0, n);
+                                System.out.println(str);
+                            }
+                        }                        
+                     } catch (IOException e) {
+                         System.out.println("Reading Quit.");
+                         System.exit(0);
+                     }
+                }
+            }).start();
+            
+            
+            
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+    }
+    
+
+}
+
+
+</pre>
+<br>
+<br>
+<br>
+<br><span style="font-size: medium;"><strong>三、Java Socket通信原理图</strong></span>
+<br>
+<br><img src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/06ccd7b1-4c86-3115-8b5f-580de61f15d3.png">
+<br>
+<br>
+<br>
+<br>
+<br><span style="font-size: medium;"><strong>四、Java Socket 编程进阶</strong></span>
+<br>
+<br>
+<br><a href="http://stackoverflow.com/questions/17206570" target="_blank"><strong>Will I need a separate socket and thread for every player that joins? [JAVA]</strong></a>
+<br>服务器端是否应该为每一个客户端创建一个线程？
+<br>
+<br>I have been learning about sockets for sometime now (I'm quite young) and I think I have a good grip on java sockets. I have decided to create a simple multiplayer Java 2D social game. My goal is to have the server output players' X,Y coordinates and chat every 10 milliseconds. From what I have read, my very average logic tells me that only one user at a time can connect to a socket. So therefore I will need a separate thread and socket for each player that connects.
+<br>
+<br>Is it necessary to have one ServerSocket and thread per player?
+<br>
+<br>
+<br><strong>Answer:</strong>
+<br>
+<br>You should have just one ServerSocket listening on a port that is known to the client. When a client connects to the server, a new Socket object is created and the original ServerSocket goes back to listening again. You should then spin off a new Thread or hand over to an Executor the actual work of talking to the client, otherwise your server will stop listening for client connections.
+<br>
+<br>Here is a very basic sketch of the code you will need.
+<br>
+<br><div class="dp-highlighter" id=""><div class="bar"><div class="tools">Java代码 <embed wmode="transparent" src="/javascripts/syntaxhighlighter/clipboard_new.swf" width="14" height="15" flashvars="clipboard=%0Aimport%20java.net.*%3B%0Aimport%20java.util.concurrent.*%3B%0A%0Apublic%20class%20CoordinateServer%20%7B%0A%20%20public%20static%20void%20main(String...%20argv)%20throws%20Exception%20%7B%0A%20%20%20%20%2F%2F%20&#39;port&#39;%20is%20known%20to%20the%20server%20and%20the%20client%0A%20%20%20%20int%20port%20%3D%20Integer.valueOf(argv%5B0%5D)%3B%0A%20%20%20%20ServerSocket%20ss%20%3D%20new%20ServerSocket(port)%3B%0A%0A%20%20%20%20%2F%2F%20You%20should%20decide%20what%20the%20best%20type%20of%20service%20is%20here%0A%20%20%20%20ExecutorService%20es%20%3D%20Executors.newCachedThreadPool%20()%3B%0A%0A%20%20%20%20%2F%2F%20How%20will%20you%20decide%20to%20shut%20the%20server%20down%3F%0A%20%20%20%20while%20(true)%20%7B%0A%20%20%20%20%20%20%2F%2F%20Blocks%20until%20a%20client%20connects%2C%20returns%20the%20new%20socket%20%0A%20%20%20%20%20%20%2F%2F%20to%20use%20to%20talk%20to%20the%20client%0A%20%20%20%20%20%20Socket%20s%20%3D%20ss.accept%20()%3B%0A%0A%20%20%20%20%20%20%2F%2F%20CoordinateOutputter%20is%20a%20class%20that%20implements%20Runnable%20%0A%20%20%20%20%20%20%2F%2F%20and%20sends%20co-ordinates%20to%20a%20given%20socket%3B%20it&#39;s%20also%0A%20%20%20%20%20%20%2F%2F%20responsible%20for%20cleaning%20up%20the%20socket%20and%20any%20other%0A%20%20%20%20%20%20%2F%2F%20resources%20when%20the%20client%20leaves%0A%20%20%20%20%20%20es.submit(new%20CoordinateOutputter(s))%3B%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A%0A" quality="high" allowscriptaccess="always" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer">&nbsp;<a href="javascript:void()" title="收藏这段代码" onclick="code_favorites_do_favorite(this);return false;"><img class="star" src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/icon_star.png" alt="收藏代码"><img class="spinner" src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/spinner.gif" style="display:none"></a></div></div><ol start="1" class="dp-j"><li><span><span class="keyword">import</span><span>&nbsp;java.net.*;&nbsp;&nbsp;</span></span></li><li><span><span class="keyword">import</span><span>&nbsp;java.util.concurrent.*;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span><span class="keyword">public</span><span>&nbsp;</span><span class="keyword">class</span><span>&nbsp;CoordinateServer&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;<span class="keyword">public</span><span>&nbsp;</span><span class="keyword">static</span><span>&nbsp;</span><span class="keyword">void</span><span>&nbsp;main(String...&nbsp;argv)&nbsp;</span><span class="keyword">throws</span><span>&nbsp;Exception&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;'port'&nbsp;is&nbsp;known&nbsp;to&nbsp;the&nbsp;server&nbsp;and&nbsp;the&nbsp;client</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">int</span><span>&nbsp;port&nbsp;=&nbsp;Integer.valueOf(argv[</span><span class="number">0</span><span>]);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;ServerSocket&nbsp;ss&nbsp;=&nbsp;<span class="keyword">new</span><span>&nbsp;ServerSocket(port);&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;You&nbsp;should&nbsp;decide&nbsp;what&nbsp;the&nbsp;best&nbsp;type&nbsp;of&nbsp;service&nbsp;is&nbsp;here</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;ExecutorService&nbsp;es&nbsp;=&nbsp;Executors.newCachedThreadPool&nbsp;();&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;How&nbsp;will&nbsp;you&nbsp;decide&nbsp;to&nbsp;shut&nbsp;the&nbsp;server&nbsp;down?</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">while</span><span>&nbsp;(</span><span class="keyword">true</span><span>)&nbsp;{&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;Blocks&nbsp;until&nbsp;a&nbsp;client&nbsp;connects,&nbsp;returns&nbsp;the&nbsp;new&nbsp;socket&nbsp;</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;to&nbsp;use&nbsp;to&nbsp;talk&nbsp;to&nbsp;the&nbsp;client</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Socket&nbsp;s&nbsp;=&nbsp;ss.accept&nbsp;();&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;CoordinateOutputter&nbsp;is&nbsp;a&nbsp;class&nbsp;that&nbsp;implements&nbsp;Runnable&nbsp;</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;and&nbsp;sends&nbsp;co-ordinates&nbsp;to&nbsp;a&nbsp;given&nbsp;socket;&nbsp;it's&nbsp;also</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;responsible&nbsp;for&nbsp;cleaning&nbsp;up&nbsp;the&nbsp;socket&nbsp;and&nbsp;any&nbsp;other</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;resources&nbsp;when&nbsp;the&nbsp;client&nbsp;leaves</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;es.submit(<span class="keyword">new</span><span>&nbsp;CoordinateOutputter(s));&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>}&nbsp;&nbsp;</span></li></ol></div><pre class="java" name="code" style="display: none;">
+import java.net.*;
+import java.util.concurrent.*;
+
+public class CoordinateServer {
+  public static void main(String... argv) throws Exception {
+    // 'port' is known to the server and the client
+    int port = Integer.valueOf(argv[0]);
+    ServerSocket ss = new ServerSocket(port);
+
+    // You should decide what the best type of service is here
+    ExecutorService es = Executors.newCachedThreadPool ();
+
+    // How will you decide to shut the server down?
+    while (true) {
+      // Blocks until a client connects, returns the new socket 
+      // to use to talk to the client
+      Socket s = ss.accept ();
+
+      // CoordinateOutputter is a class that implements Runnable 
+      // and sends co-ordinates to a given socket; it's also
+      // responsible for cleaning up the socket and any other
+      // resources when the client leaves
+      es.submit(new CoordinateOutputter(s));
+    }
+  }
+}
+
+</pre>
+<br>
+<br>
+<br>
+<br>I have put sockets here since they are easier to get started with, but once you have this working well and want to boost your performance you will probably want to investigate the java.nio.channels package. 
+<br>
+<br>There's a good <a href="https://www.ibm.com/developerworks/java/tutorials/j-nio/" target="_blank">tutorial over at IBM</a>.
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>-
+<br>转载请注明，
+<br>原文出处： http://lixh1986.iteye.com/blog/2348001
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>-
+<br>
+
+  
+  <div class="attachments">
+    
+      
+        <ul style="display:none;">
+          <li><a href="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/07352c68-d489-30dd-b739-acb35d5a443b.png" target="_blank"><img src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/07352c68-d489-30dd-b739-acb35d5a443b-thumb.png" class="magplus" title="点击查看原始大小图片"></a></li>
+          
+          <li>大小: 2.5 KB</li>
+        </ul>
+      
+    
+      
+        <ul style="display:none;">
+          <li><a href="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/06ccd7b1-4c86-3115-8b5f-580de61f15d3.png" target="_blank"><img src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/06ccd7b1-4c86-3115-8b5f-580de61f15d3-thumb.png" class="magplus" title="点击查看原始大小图片"></a></li>
+          
+          <li>大小: 39.4 KB</li>
+        </ul>
+      
+    
+    
+      <ul>
+        <li><a href="https://www.iteye.com/blog/lixh1986-2348001#" onclick="$$(&#39;div.attachments ul&#39;).invoke(&#39;show&#39;);$(this).up(1).hide();return false;">查看图片附件</a></li>
+      </ul>
+    
+  </div>
+
+
+
+  <div id="bottoms" class="clearfix">
+    
+    <div id="share_weibo">分享到：
+      <a data-type="sina" href="javascript:;" title="分享到新浪微博"><img src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/sina.jpg"></a>
+      <a data-type="qq" href="javascript:;" title="分享到腾讯微博"><img src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/tec.jpg"></a>
+    </div>
+  </div>
+
+  <div class="blog_nav">
+    <div class="pre_next">
+      <a href="https://www.iteye.com/blog/2348442" class="next" title="javascript之面向对象编程之原型继承">javascript之面向对象编程之原型继承</a>
+      |
+      <a href="https://www.iteye.com/blog/2347902" class="pre" title="makefile 的用法">makefile 的用法</a>
+    </div>
+  </div>
+  <div class="blog_bottom">
+    <ul>
+      <li>2016-12-29 10:50</li>
+      <li>浏览 2286</li>
+      <li><a href="https://www.iteye.com/blog/lixh1986-2348001#comments">评论(0)</a></li>
+      
+      
+      <li>分类:<a href="https://www.iteye.com/blogs/category/language">编程语言</a></li>      
+      <li class="last"><a href="https://www.iteye.com/wiki/blog/2348001" target="_blank" class="more">查看更多</a></li>
+    </ul>    
+  </div>
+    
+  <div class="blog_comment">
+    <h5>评论</h5>
+    <a id="comments" name="comments"></a>
+    
+    
+    
+  </div>
+
+  <div class="blog_comment">
+    <h5>发表评论</h5>
+            <p style="text-align:center; margin-top:30px;margin-bottom:0px;"><a href="https://www.iteye.com/login" style="background-color:white;"> <img src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/login_icon.png" style="vertical-align:middle; margin-right: 10px;"></a><a href="https://www.iteye.com/login">  您还没有登录,请您登录后再发表评论 </a></p>
+      </div>
+  </div>
+  <div>
+    <script type="text/javascript">
+        (function() {
+            var s = "_" + Math.random().toString(36).slice(2);
+            document.write('<div style="" id="' + s + '"></div>');
+            (window.slotbydup = window.slotbydup || []).push({
+                id: "u4614430",
+                container: s
+            });
+        })();
+    </script><div style="" id="_k560o5cap2s"></div>
+    <!-- 多条广告如下脚本只需引入一次 -->
+    <script type="text/javascript" src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/c.js(1).下载" async="async" defer="defer">
+    </script>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  dp.SyntaxHighlighter.HighlightAll('code', true, true);
+
+  $$('#main .blog_content pre[name=code]').each(function(pre, index){ // blog content
+    var post_id = 2348001;
+    var location = window.location;
+    source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+    pre.writeAttribute('codeable_id', post_id);
+    pre.writeAttribute('codeable_type', "Blog");
+    pre.writeAttribute('source_url', source_url);
+    pre.writeAttribute('pre_index', index);
+    pre.writeAttribute('title', 'Java之Socket编程之简单聊天程序');
+  });
+
+  fix_image_size($$('div.blog_content img'), 700);
+
+  function processComment() {
+    $$('#main .blog_comment > div').each(function(comment){// comment
+      var post_id = comment.id.substr(2);
+      $$("#"+comment.id+" pre[name=code]").each(function(pre, index){
+        var location = window.location;
+        source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+        source_url += "#" + comment.id;
+        pre.writeAttribute('codeable_id', post_id);
+        pre.writeAttribute('codeable_type', "BlogComment");
+        pre.writeAttribute('source_url', source_url);
+        pre.writeAttribute('pre_index', index);
+        pre.writeAttribute('title', 'Java之Socket编程之简单聊天程序');
+      });
+    });
+  }
+
+  function quote_comment(id) {
+    new Ajax.Request('/editor/quote', {
+      parameters: {'id':id, 'type':'BlogComment'},
+      onSuccess:function(response){editor.bbcode_editor.textarea.insertAfterSelection(response.responseText);
+        Element.scrollTo(editor.bbcode_editor.textarea.element);}
+    });
+  }
+
+  code_favorites_init();
+  processComment();
+  new WeiboShare({share_buttons: $('share_weibo'), img_scope: $('blog_content')});
+</script>
+
+
+
+
+      </div>
+      
+        <div class="blog-sidebar">
+          <div class="blog-sidebar-fixed">
+            <div class="news-right-side">
+              <div class="newbox recommend">
+                <div class="recommend-right">
+                <ul class="recommend-fixed-box">
+                  
+                    <li class="right-item cebian_item">
+                      <a href="https://www.iteye.com/blog/lixh1986-2442417" target="_blank">
+                        <div class="content clearfix">
+                          <h5 class="" title="Java之设计模式之 Observer 观察者">Java之设计模式之 Observer 观察者</h5>
+                          <span class="time">
+                            2019-07-04 17:21
+                          </span>
+                          <span class="read so_read">
+                          <svg class="icon no-active hover-hide" aria-hidden="true">
+                            <use xlink:href="#yuedushu"></use>
+                          </svg>
+                            477
+                        </span>
+                        </div>
+                        <div class="right-item-desc">
+                          java.util.Observer 
+&nbsp;&nbsp;&nbsp; - 观察者。实 ...
+                        </div>
+                      </a>
+                    </li>
+                  
+                    <li class="right-item cebian_item">
+                      <a href="https://www.iteye.com/blog/lixh1986-2438282" target="_blank">
+                        <div class="content clearfix">
+                          <h5 class="" title="HashMap, LinkedHashMap and TreeMap">HashMap, LinkedHashMap and TreeMap</h5>
+                          <span class="time">
+                            2019-03-01 11:04
+                          </span>
+                          <span class="read so_read">
+                          <svg class="icon no-active hover-hide" aria-hidden="true">
+                            <use xlink:href="#yuedushu"></use>
+                          </svg>
+                            212
+                        </span>
+                        </div>
+                        <div class="right-item-desc">
+                          https://stackoverflow.com/a/177 ...
+                        </div>
+                      </a>
+                    </li>
+                  
+                    <li class="right-item cebian_item">
+                      <a href="https://www.iteye.com/blog/lixh1986-2436814" target="_blank">
+                        <div class="content clearfix">
+                          <h5 class="" title="Java lib 操作 excel 插入图片">Java lib 操作 excel 插入图片</h5>
+                          <span class="time">
+                            2019-01-19 12:46
+                          </span>
+                          <span class="read so_read">
+                          <svg class="icon no-active hover-hide" aria-hidden="true">
+                            <use xlink:href="#yuedushu"></use>
+                          </svg>
+                            415
+                        </span>
+                        </div>
+                        <div class="right-item-desc">
+                          https://poi.apache.org/componen ...
+                        </div>
+                      </a>
+                    </li>
+                  
+                    <li class="right-item cebian_item">
+                      <a href="https://www.iteye.com/blog/lixh1986-2423847" target="_blank">
+                        <div class="content clearfix">
+                          <h5 class="" title="数据库连接池C3P0">数据库连接池C3P0</h5>
+                          <span class="time">
+                            2018-05-29 16:50
+                          </span>
+                          <span class="read so_read">
+                          <svg class="icon no-active hover-hide" aria-hidden="true">
+                            <use xlink:href="#yuedushu"></use>
+                          </svg>
+                            262
+                        </span>
+                        </div>
+                        <div class="right-item-desc">
+                          一、名字的由来
+
+很多� ...
+                        </div>
+                      </a>
+                    </li>
+                  
+                    <li class="right-item cebian_item">
+                      <a href="https://www.iteye.com/blog/lixh1986-2423830" target="_blank">
+                        <div class="content clearfix">
+                          <h5 class="" title="Java8之集合(Collection)遍历 forEach()、stream()">Java8之集合(Collection)遍历 forEach()、stream()</h5>
+                          <span class="time">
+                            2018-05-29 14:39
+                          </span>
+                          <span class="read so_read">
+                          <svg class="icon no-active hover-hide" aria-hidden="true">
+                            <use xlink:href="#yuedushu"></use>
+                          </svg>
+                            8119
+                        </span>
+                        </div>
+                        <div class="right-item-desc">
+                          
+package java8.collections;
+
+ ...
+                        </div>
+                      </a>
+                    </li>
+                  
+                    <li class="right-item cebian_item">
+                      <a href="https://www.iteye.com/blog/lixh1986-2399319" target="_blank">
+                        <div class="content clearfix">
+                          <h5 class="" title="Junit Vs main on " java.util.concurrent.executors""="">Junit Vs main on "java.util.concurrent.Executors"</h5>
+                          <span class="time">
+                            2017-11-10 16:44
+                          </span>
+                          <span class="read so_read">
+                          <svg class="icon no-active hover-hide" aria-hidden="true">
+                            <use xlink:href="#yuedushu"></use>
+                          </svg>
+                            365
+                        </span>
+                        </div>
+                        <div class="right-item-desc">
+                          Same code with different result ...
+                        </div>
+                      </a>
+                    </li>
+                  
+                    <li class="right-item cebian_item">
+                      <a href="https://www.iteye.com/blog/lixh1986-2398510" target="_blank">
+                        <div class="content clearfix">
+                          <h5 class="" title="Java之大数据学习路线">Java之大数据学习路线</h5>
+                          <span class="time">
+                            2017-11-03 10:08
+                          </span>
+                          <span class="read so_read">
+                          <svg class="icon no-active hover-hide" aria-hidden="true">
+                            <use xlink:href="#yuedushu"></use>
+                          </svg>
+                            2776
+                        </span>
+                        </div>
+                        <div class="right-item-desc">
+                          三个月大数据研发学习� ...
+                        </div>
+                      </a>
+                    </li>
+                  
+                    <li class="right-item cebian_item">
+                      <a href="https://www.iteye.com/blog/lixh1986-2397696" target="_blank">
+                        <div class="content clearfix">
+                          <h5 class="" title="Java中创建对象的5种方式">Java中创建对象的5种方式</h5>
+                          <span class="time">
+                            2017-10-26 14:21
+                          </span>
+                          <span class="read so_read">
+                          <svg class="icon no-active hover-hide" aria-hidden="true">
+                            <use xlink:href="#yuedushu"></use>
+                          </svg>
+                            428
+                        </span>
+                        </div>
+                        <div class="right-item-desc">
+                          一、Java之5种创建对象的方式
+—————————————— ...
+                        </div>
+                      </a>
+                    </li>
+                  
+                    <li class="right-item cebian_item">
+                      <a href="https://www.iteye.com/blog/lixh1986-2381108" target="_blank">
+                        <div class="content clearfix">
+                          <h5 class="" title="Log4j和Slf4j的比较">Log4j和Slf4j的比较</h5>
+                          <span class="time">
+                            2017-06-23 12:41
+                          </span>
+                          <span class="read so_read">
+                          <svg class="icon no-active hover-hide" aria-hidden="true">
+                            <use xlink:href="#yuedushu"></use>
+                          </svg>
+                            837
+                        </span>
+                        </div>
+                        <div class="right-item-desc">
+                          
+一直搞不清 Log4j 和 SLF4j 的关系。今天才若有所 ...
+                        </div>
+                      </a>
+                    </li>
+                  
+                    <li class="right-item cebian_item">
+                      <a href="https://www.iteye.com/blog/lixh1986-2370408" target="_blank">
+                        <div class="content clearfix">
+                          <h5 class="" title="Java之Java7新特性之try资源句式">Java之Java7新特性之try资源句式</h5>
+                          <span class="time">
+                            2017-04-20 14:58
+                          </span>
+                          <span class="read so_read">
+                          <svg class="icon no-active hover-hide" aria-hidden="true">
+                            <use xlink:href="#yuedushu"></use>
+                          </svg>
+                            2874
+                        </span>
+                        </div>
+                        <div class="right-item-desc">
+                          Java之Java7新特性之try资源句式
+一、【try资源句 ...
+                        </div>
+                      </a>
+                    </li>
+                  
+                    <li class="right-item cebian_item">
+                      <a href="https://www.iteye.com/blog/lixh1986-2360306" target="_blank">
+                        <div class="content clearfix">
+                          <h5 class="" title="Java之 java.util.concurrent 包之ExecutorService之submit () 之 Future ">Java之 java.util.concurrent 包之ExecutorService之submit () 之 Future </h5>
+                          <span class="time">
+                            2017-03-04 21:27
+                          </span>
+                          <span class="read so_read">
+                          <svg class="icon no-active hover-hide" aria-hidden="true">
+                            <use xlink:href="#yuedushu"></use>
+                          </svg>
+                            2260
+                        </span>
+                        </div>
+                        <div class="right-item-desc">
+                          一、如何使用 ExecutorService.submit() ...
+                        </div>
+                      </a>
+                    </li>
+                  
+                    <li class="right-item cebian_item">
+                      <a href="https://www.iteye.com/blog/lixh1986-2360304" target="_blank">
+                        <div class="content clearfix">
+                          <h5 class="" title="Java之 java.util.concurrent 包之Executor与ExecutorService">Java之 java.util.concurrent 包之Executor与ExecutorService</h5>
+                          <span class="time">
+                            2017-03-04 21:18
+                          </span>
+                          <span class="read so_read">
+                          <svg class="icon no-active hover-hide" aria-hidden="true">
+                            <use xlink:href="#yuedushu"></use>
+                          </svg>
+                            1786
+                        </span>
+                        </div>
+                        <div class="right-item-desc">
+                          一、问题： execute() 与 submit() 的区别？ ...
+                        </div>
+                      </a>
+                    </li>
+                  
+                    <li class="right-item cebian_item">
+                      <a href="https://www.iteye.com/blog/lixh1986-2355546" target="_blank">
+                        <div class="content clearfix">
+                          <h5 class="" title="JAVAEE之单用户登录">JAVAEE之单用户登录</h5>
+                          <span class="time">
+                            2017-02-05 11:55
+                          </span>
+                          <span class="read so_read">
+                          <svg class="icon no-active hover-hide" aria-hidden="true">
+                            <use xlink:href="#yuedushu"></use>
+                          </svg>
+                            556
+                        </span>
+                        </div>
+                        <div class="right-item-desc">
+                          单用户登录是系统中数据一直性的解决方案之一。
+问题背景：
+试想 ...
+                        </div>
+                      </a>
+                    </li>
+                  
+                    <li class="right-item cebian_item">
+                      <a href="https://www.iteye.com/blog/lixh1986-2355371" target="_blank">
+                        <div class="content clearfix">
+                          <h5 class="" title="Java之多线程之线程池之线程重复使用">Java之多线程之线程池之线程重复使用</h5>
+                          <span class="time">
+                            2017-02-04 13:33
+                          </span>
+                          <span class="read so_read">
+                          <svg class="icon no-active hover-hide" aria-hidden="true">
+                            <use xlink:href="#yuedushu"></use>
+                          </svg>
+                            3934
+                        </span>
+                        </div>
+                        <div class="right-item-desc">
+                          一、问题背景
+在使用多线程时，如果要开启一个任务，则就需要新建 ...
+                        </div>
+                      </a>
+                    </li>
+                  
+                    <li class="right-item cebian_item">
+                      <a href="https://www.iteye.com/blog/lixh1986-2354853" target="_blank">
+                        <div class="content clearfix">
+                          <h5 class="" title="Java之语法之方法调用之地址传值之空对象（null）">Java之语法之方法调用之地址传值之空对象（null）</h5>
+                          <span class="time">
+                            2017-01-26 14:05
+                          </span>
+                          <span class="read so_read">
+                          <svg class="icon no-active hover-hide" aria-hidden="true">
+                            <use xlink:href="#yuedushu"></use>
+                          </svg>
+                            2585
+                        </span>
+                        </div>
+                        <div class="right-item-desc">
+                          一、问题：
+
+
+    public void test( ...
+                        </div>
+                      </a>
+                    </li>
+                  
+                    <li class="right-item cebian_item">
+                      <a href="https://www.iteye.com/blog/lixh1986-2353388" target="_blank">
+                        <div class="content clearfix">
+                          <h5 class="" title="Java之正则表达式之简写符号">Java之正则表达式之简写符号</h5>
+                          <span class="time">
+                            2017-01-16 19:36
+                          </span>
+                          <span class="read so_read">
+                          <svg class="icon no-active hover-hide" aria-hidden="true">
+                            <use xlink:href="#yuedushu"></use>
+                          </svg>
+                            533
+                        </span>
+                        </div>
+                        <div class="right-item-desc">
+                          
+
+ // Pattern.
+  /*  
+      ...
+                        </div>
+                      </a>
+                    </li>
+                  
+                    <li class="right-item cebian_item">
+                      <a href="https://www.iteye.com/blog/lixh1986-2352308" target="_blank">
+                        <div class="content clearfix">
+                          <h5 class="" title="Java之消息推送之WebSocket">Java之消息推送之WebSocket</h5>
+                          <span class="time">
+                            2017-01-10 17:58
+                          </span>
+                          <span class="read so_read">
+                          <svg class="icon no-active hover-hide" aria-hidden="true">
+                            <use xlink:href="#yuedushu"></use>
+                          </svg>
+                            1676
+                        </span>
+                        </div>
+                        <div class="right-item-desc">
+                          一、问题背景
+HTTP 协议是单向协议。
+二、实现服务器端向客 ...
+                        </div>
+                      </a>
+                    </li>
+                  
+                    <li class="right-item cebian_item">
+                      <a href="https://www.iteye.com/blog/lixh1986-2351465" target="_blank">
+                        <div class="content clearfix">
+                          <h5 class="" title="Java之内存模型之堆内存（Heap）">Java之内存模型之堆内存（Heap）</h5>
+                          <span class="time">
+                            2017-01-09 15:27
+                          </span>
+                          <span class="read so_read">
+                          <svg class="icon no-active hover-hide" aria-hidden="true">
+                            <use xlink:href="#yuedushu"></use>
+                          </svg>
+                            3815
+                        </span>
+                        </div>
+                        <div class="right-item-desc">
+                          Java 内存模型之堆内存� ...
+                        </div>
+                      </a>
+                    </li>
+                  
+                    <li class="right-item cebian_item">
+                      <a href="https://www.iteye.com/blog/lixh1986-2351367" target="_blank">
+                        <div class="content clearfix">
+                          <h5 class="" title="Java之多线程之Callable与Future">Java之多线程之Callable与Future</h5>
+                          <span class="time">
+                            2017-01-08 22:48
+                          </span>
+                          <span class="read so_read">
+                          <svg class="icon no-active hover-hide" aria-hidden="true">
+                            <use xlink:href="#yuedushu"></use>
+                          </svg>
+                            1701
+                        </span>
+                        </div>
+                        <div class="right-item-desc">
+                          Java之多线程之Callable与Future
+从 Java ...
+                        </div>
+                      </a>
+                    </li>
+                  
+                    <li class="right-item cebian_item">
+                      <a href="https://www.iteye.com/blog/lixh1986-2351353" target="_blank">
+                        <div class="content clearfix">
+                          <h5 class="" title="Java之设计模式之Singleton">Java之设计模式之Singleton</h5>
+                          <span class="time">
+                            2017-01-08 19:48
+                          </span>
+                          <span class="read so_read">
+                          <svg class="icon no-active hover-hide" aria-hidden="true">
+                            <use xlink:href="#yuedushu"></use>
+                          </svg>
+                            837
+                        </span>
+                        </div>
+                        <div class="right-item-desc">
+                          Java之设计模式之Singleton
+Java Single ...
+                        </div>
+                      </a>
+                    </li>
+                  
+                </ul>
+              </div></div>
+            </div>
+            <div class="persion_article">
+
+            </div>
+          </div>
+        </div>
+            <script>
+        setTimeout(function () {
+          var naviga_offsetTop = 0;
+
+          function onload_function() {
+            naviga_offsetTop = jQuery("#nav_show_top_stop").position().top;
+            jQuery(window).bind("scroll", naviga_stay_top);
+            jQuery(window).bind("mousewheel", naviga_stay_top);
+            jQuery(document).bind("scroll", naviga_stay_top);
+            jQuery(document).bind("mousewheel", naviga_stay_top);
+          }
+
+          function naviga_stay_top() {
+
+            var scrollTop = jQuery(document).scrollTop();
+            if (scrollTop > (naviga_offsetTop + 250)) {
+              jQuery("#nav_show_top_stop").css({
+                "position": "fixed"
+              });
+              jQuery("#nav_show_top_stop").css({
+                "top": "0px"
+              });
+            } else {
+              jQuery("#nav_show_top_stop").css({
+                "position": "fixed"
+              });
+              jQuery("#nav_show_top_stop").css({
+                "top": naviga_offsetTop + 250 - scrollTop + "px"
+              });
+            }
+          }
+          jQuery(document).ready(onload_function());
+        }, 200);
+      </script>
+    </div>
+    
+    <div id="footer" class="clearfix">
+      <!-- <div id="copyright">
+        <hr />
+        声明：ITeye文章版权属于作者，受法律保护。没有作者书面许可不得转载。若作者同意转载，必须以超链接形式标明文章原始出处和作者。<br />
+        &copy; 2003-
+        2019 ITeye.com. All rights reserved. [ 京ICP证110151号 京公网安备110105010620 ]
+      </div> -->
+      <div id="ad_pop">
+        <div class="J_adv" data-view="true" data-mod="ad_popu_64" data-mtp="62" data-order="21" data-con="ad_content_2070">
+          <!-- 广告位：PC端-iteye博客详情右侧弹窗-300*250 -->
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+  document.write("<img src='https://stat.iteye.com/?url="+ encodeURIComponent(document.location.href) + "&referrer=" + encodeURIComponent(document.referrer) + "&user_id=' width='0' height='0' />");
+</script><img src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/saved_resource" width="0" height="0">
+
+
+
+   Global site tag (gtag.js) - Google Analytics
+  <script async="" src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/js"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-127895514-6');
+  </script>
+
+  
+  
+  <script src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/jquery-1.11.1.min.js.下载" type="text/javascript"></script>
+<script src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/report.js.下载" type="text/javascript"></script>
+<style>
+  .userinfo {display: none !important;}
+  .persion_article h3{
+    background: none !important;
+    border-bottom: none!important;
+    padding: 0!important;
+    margin-bottom: 0!important;
+    line-height: 1!important;
+  }
+  .persion_article .right_box{
+    margin-top: 0!important;
+  }
+  .persion_article .footer_box .feed_new_tit span{
+    padding-left: 0!important;
+  }
+</style>
+<script>
+(function($){
+  var windowHeight = $(window).height(),
+      contentHeight = $(".hide-main-content").height()
+      windowHeight = windowHeight * 1.2 //获得可视区域高度
+      if(contentHeight > windowHeight){
+        $(".hide-article-box").show()
+        $(".hide-main-content").css({'height': windowHeight,'overflow':'hidden'})
+        $(".hide-article-box").find("#btn-readmore").click(function(){
+          $(this).parents('.hide-main-content').removeAttr('style')
+          $(this).parent().hide()
+        })
+      }
+})(jQuery)
+</script>
+<script type="text/javascript">var $csdn_iteye_jq = jQuery.noConflict();// 解决jq与prototype.js命名空间冲突的问题</script>
+
+
+  
+  
+  <script src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/web-storage-cache.min.js.下载" type="text/javascript"></script>
+  <script src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/replace.min.js.下载" type="text/javascript"></script>
+  
+
+
+<iframe id="blockbyte-bs-sidebar" class="notranslate" data-pos="left" src="./Java之Socket编程之简单聊天程序 - - ITeye博客_files/saved_resource(2).html"></iframe><div id="blockbyte-bs-indicator" class="blockbyte-bs-fullHeight blockbyte-bs-visible" data-pos="left" style="width: 1px; height: 100%; top: 0%;"><div><span></span></div></div><div class="newbox"><div class="recommend-right">
+  <ul class="recommend-fixed-box">
+    
+</ul>
+</div></div></body></html>
