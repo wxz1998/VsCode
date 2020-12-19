@@ -8,7 +8,7 @@
 
 - npm --version 或 npm -v (win10)
 
-# npm 更换成淘宝镜像源以及 cnpm
+## npm 更换成淘宝镜像源以及 cnpm
 
 1.需求由来
 
