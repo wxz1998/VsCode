@@ -24,21 +24,18 @@ npm install -g npm-check-updates
 
 ```shell
 ncu
-1
 ```
 
 也可以通过执行以下命令查看所有可用的相关命令行(命令变动或者无效时查看命令)
 
 ```shell
 ncu -h
-1
 ```
 
 \##更新包
 
 ```shell
 ncu -u
-1
 ```
 
 ## 使用心得
