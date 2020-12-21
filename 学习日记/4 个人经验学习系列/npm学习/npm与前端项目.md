@@ -18,5 +18,9 @@
 
 - 如需删除 node_modules 目录下面的包（package），请执行：
 - `npm uninstall <package>`
+- 如需从 package.json 文件中删除依赖，需要在命令后添加参数 --save:
+- `npm uninstall --save lodash`
+- 注意：如果你将安装的包作为 "devDependency"（也就是通过 --save-dev 参数保存的），那么 --save 无法将其从 package.json 文件中删除。所以必须通过 --save-dev 参数可以将其卸载。
+- 为了确定 npm uninstall 命令执行成功，请找到 node_modules 目录，并在此目录下检查你所卸载的包（package）所对应的目录是否消失了。
 
 ## npm 创建 vue 项目(注意:是创建)
