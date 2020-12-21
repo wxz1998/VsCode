@@ -10,7 +10,7 @@
 - npm install -g npm-check (安装)
 - npm-check -u -g 检查 npm (包的状态)
 
-## 工具–npm-check-updates
+## 通过工具 npm-check-updates 来更新
 
 全局安装 npm-check-updates
 
