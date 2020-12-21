@@ -16,7 +16,6 @@
 
 ```shell
 npm install -g npm-check-updates
-1
 ```
 
 ## 检查可更新的包
