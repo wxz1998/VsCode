@@ -5,10 +5,11 @@
 - npm -g outdated (通过 npm -g outdated 可以查看那些包有更新)
 - 列出来了，当前版本，和最后的版本，只需要得到所有需要升级的包名和版本号就可以使用 npm -g install <name>直接升级了
 
-## 通过 npm-check 来更新
+## 通过 npm-check 来更新(可行)
 
 - npm install -g npm-check (安装)
 - npm-check -u -g 检查 npm (包的状态)
+- 通过上下键可以移动光标，使用空格键可以选择需要处理的包，回车直接进行处理
 
 ## 通过工具 npm-check-updates 来更新
 
