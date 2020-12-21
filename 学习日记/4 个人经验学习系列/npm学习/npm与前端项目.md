@@ -11,5 +11,12 @@
 
 - 纯前端项目,使用 npm 对包进行管理
 - npm init (项目根目录初始化) 最好写成 npm init -y (默认全 yes,不然有很多选项需要选)
+- 会创建一个 package.json 的配置文件
+- 然后利用 npm 下载 js 包,会在本地创建 node_modules 文件夹
+
+### 删除
+
+- 如需删除 node_modules 目录下面的包（package），请执行：
+- `npm uninstall <package>`
 
 ## npm 创建 vue 项目(注意:是创建)
