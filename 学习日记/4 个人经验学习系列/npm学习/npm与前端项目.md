@@ -14,6 +14,11 @@
 - 会创建一个 package.json 的配置文件
 - 然后利用 npm 下载 js 包,会在本地创建 node_modules 文件夹
 
+### npm i (npm install)
+
+- 如果提前写好了 package.json,只需 npm i 命令即可下载配置文件内以经写进去的包
+- 例如下载了别人的前端项目,里面只有 package.json,没有 node_modules,执行 npm i,就可以下载好配置文件内的环境需求了
+
 ### 删除
 
 - 如需删除 node_modules 目录下面的包（package），请执行：
