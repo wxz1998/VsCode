@@ -7,6 +7,16 @@
 - npm 也是一个封装好的 js 组件,node.js 默认自带
 - 利用 npm 可以下载别人的 js 包,并进行管理
 
+```txt
+npm init -y (以默认选项初始化)
+npm i vue (安装vue,默认最新版本)
+npm i vue@1.0.0 (安装指定版本号的vue)
+npm uninstall vue (卸载vue)
+npm update vue (更新vue)
+npm i vue --save-dev (安装到开发环境,不加则默认为生产环境)
+npm i (把package.json内的配置环境全部安装上)
+```
+
 ## npm 对前端项目的包管理(注意:只是管理)
 
 - 纯前端项目,使用 npm 对包进行管理
