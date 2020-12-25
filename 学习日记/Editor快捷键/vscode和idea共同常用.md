@@ -18,7 +18,7 @@
 
 ### vscode 扩展快捷键
 
-- alt shift t 驼峰命名
+- shift alt t 驼峰命名
 - ctrl alt i 添加头部注释
 - ctrl alt o 添加函数注释
 - ctrl alt t 有道翻译
