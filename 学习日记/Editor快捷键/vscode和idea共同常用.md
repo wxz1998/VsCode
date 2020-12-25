@@ -1,5 +1,7 @@
 # 常用 java 快捷键
 
+- vscode 用了 idea 快捷键插件
+
 ## IDEA
 
 - ctrl alt L (格式化)
