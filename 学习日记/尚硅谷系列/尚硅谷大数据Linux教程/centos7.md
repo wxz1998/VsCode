@@ -44,3 +44,5 @@
 - /hello 然后 enter (当前文件查找 hello) n (查找下一个)
 - (显示行号) :set nu (不显示行号) :set nonu
 - G (到最末行) gg(到最顶行)
+- u (撤回)
+- 20 然后 shift+g (到指定的 20 行)
