@@ -5,8 +5,11 @@
 ### 系统相关命令
 
 - su root 或 su - (切换到 root 权限(与 su 有区别))
-- shutdown -h now (关机)
-- shutdown -r now (重启)
+- logout (注销用户)
+- shutdown -h now (理机关机) 等同于 halt
+- shutdown -h 1 (1 分钟后关机)
+- shutdown -r now (立即重启) 等同于 reboot
+- sync (把内存数据写进磁盘,以免丢失(程序员的好习惯))
 - 如果不进入 root 账号,可以在命令前加入 sudo 来以管理员权限执行
 
 ### 手动更新软件包 yum 安装器
