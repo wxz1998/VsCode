@@ -7,6 +7,7 @@
 - su root 或 su - (切换到 root 权限(与 su 有区别))
 - shutdown -h now (关机)
 - shutdown -r now (重启)
+- 如果不进入 root 账号,可以在命令前加入 sudo 来以管理员权限执行
 
 ### 手动更新软件包 yum 安装器
 
