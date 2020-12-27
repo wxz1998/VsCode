@@ -26,6 +26,8 @@
 - yum clean headers (删除所有头文件)
 - yum clean all (删除所有缓存的包和头文件)
 
+### 用户管理
+
 ## vi 和 vim 的使用
 
 ### 常用命令
