@@ -8,9 +8,18 @@
 - shutdown -h now (关机)
 - shutdown -r now (重启)
 
-### 手动更新软件包
+### 手动更新软件包 yum 安装器
 
-- yum update -y (升级所有包同时也升级软件和系统内核)
+- yum update -y (升级所有包同时也升级软件和系统内核)或 yum -y update (更新当前系统中安装的所有 rpm 包)
 - yum upgrade (只升级所有包，不升级软件和系统内核)
+- yum -y install [package] (下载并安装一个 rpm 包)
+- yum localinstall [package.rpm] (安装一个 rpm 包，使用你自己的软件仓库解决所有依赖关系)
+- yum update [package] (更新一个 rpm 包)
+- yum remove [package] (删除一个 rpm 包)
+- yum list (列出当前系统中安装的所有包)
+- yum search [package] (在 rpm 仓库中搜寻软件包)
+- yum clean [package] (清除缓存目录（/var/cache/yum）下的软件包)
+- yum clean headers (删除所有头文件)
+- yum clean all (删除所有缓存的包和头文件)
 
 ## vi 和 vim 的使用
