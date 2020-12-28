@@ -4,9 +4,21 @@
 
 ### 更换国内源
 
-- ping 国内源,谁快用谁
-- ping aliyun.com(ping 阿里源)
-- ping 163.com (ping 网易源)
+1. ping 国内源,谁快用谁
+   - `ping aliyun.com` (ping 阿里源)
+   - `ping 163.com` (ping 网易源)
+2. 备份源文件(也可以不备份)
+   - `mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup`
+3. 下载更改源
+   - 根据 centos 版本下载对应的新源，这里以 CentOS7 为例
+   - `wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo`
+   - 如果 wget 命令不生效，说明还没有安装 wget 工具，输入 `yum -y install wget` 回车进行安装，或者使用
+   - `curl -O http://mirrors.aliyun.com/repo/Centos-7.repo`
+4. 清空 yum 缓存并生存 cache 文件
+   - `yum clean all`
+   - `yum makecache`
+5. 尝试更新系统
+   - `yum -y update`
 
 ### 系统相关命令
 
