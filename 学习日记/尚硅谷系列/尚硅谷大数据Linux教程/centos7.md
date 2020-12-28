@@ -2,6 +2,12 @@
 
 ## CentOS7 常用命令
 
+### 更换国内源
+
+- ping 国内源,谁快用谁
+- ping aliyun.com(ping 阿里源)
+- ping 163.com (ping 网易源)
+
 ### 系统相关命令
 
 - su root 或 su - (切换到 root 权限(与 su 有区别))
