@@ -20,6 +20,12 @@
 5. 尝试更新系统
    - `yum -y update`
 
+### CentOS7 清理老旧内核
+
+- uname -r(使用 uname -r 查看内核版本)
+- rpm -q kernel(接着使用 rpm -q kernel 查看系统内所有的内核)
+- yum remove 内核版本编号(相互对照，将老旧内核使用 yum remove 命令删除)
+
 ### 系统相关命令
 
 - su root 或 su - (切换到 root 权限(与 su 有区别))
