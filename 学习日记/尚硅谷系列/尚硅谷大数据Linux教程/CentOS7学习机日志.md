@@ -25,3 +25,39 @@
 [root@centos7 yum.repos.d]# ls
 CentOS7-Base-163.repo  Centos-7.repo  repo_bak
 ```
+
+```txt
+清除系统yum缓存并生成新的yum缓存
+
+清除系统所有的yum缓存
+[root@centos7 yum.repos.d]# yum clean all
+
+生成yum缓存
+[root@centos7 yum.repos.d]# yum makecache
+```
+
+```txt
+安装epel源
+[root@centos7 yum.repos.d]# yum list | grep epel-release
+
+[root@centos7 yum.repos.d]# yum install -y epel-release
+
+[root@centos7 yum.repos.d]# ls
+CentOS7-Base-163.repo  Centos-7.repo  epel.repo  epel-testing.repo  repo_bak
+
+使用阿里开源镜像提供的epel源
+[root@centos7 yum.repos.d]# wget -O /etc/yum.repos.d/epel-7.repo http://mirrors.aliyun.com/repo/epel-7.repo
+
+[root@centos7 yum.repos.d]# ls
+CentOS7-Base-163.repo  Centos-7.repo  epel-7.repo  epel.repo  epel-testing.repo  repo_bak
+
+再次清除系统yum缓存，并重新生成新的yum缓存
+[root@centos7 yum.repos.d]# yum clean all
+
+[root@centos7 yum.repos.d]# yum makecache
+
+查看系统可用的yum源和所有的yum源
+[root@centos7 yum.repos.d]# yum repolist enabled
+
+[root@centos7 yum.repos.d]# yum repolist all
+```
