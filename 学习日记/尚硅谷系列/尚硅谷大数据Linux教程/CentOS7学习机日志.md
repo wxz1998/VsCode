@@ -61,3 +61,22 @@ CentOS7-Base-163.repo  Centos-7.repo  epel-7.repo  epel.repo  epel-testing.repo 
 
 [root@centos7 yum.repos.d]# yum repolist all
 ```
+
+## 有了旧内核 删吧
+
+```txt
+查看一下内核
+[wxz@centos7 ~]$ uname -r
+3.10.0-1160.11.1.el7.x86_64
+
+查看所有内核信息
+[wxz@centos7 ~]$ rpm -q kernel
+kernel-3.10.0-1062.el7.x86_64
+kernel-3.10.0-1160.11.1.el7.x86_64
+
+得管理员才能删
+[wxz@centos7 ~]$ su root
+
+删除旧的
+[root@centos7 wxz]# yum remove kernel-3.10.0-1062.el7.x86_64
+```
