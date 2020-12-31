@@ -1,4 +1,4 @@
-# 以 CentOS7 为服务器
+# 服务器 CentOS7 学习
 
 ## CentOS7 常用命令
 
