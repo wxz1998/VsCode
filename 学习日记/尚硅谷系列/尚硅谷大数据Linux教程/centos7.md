@@ -66,6 +66,10 @@ cd : change directory 切换目录
 cd /home/ (切换到 home 目录)
 mkdir test (在 home 目录下创建文件夹)
 useradd -d /home/test/ xh (创建新用户 xh 并分配到 test 目录下)
+会有警告
+建议不要先创建目录再分配,而是在创建用户的同时创建目录
+useradd -d /home/test1 xh (创建目录 test1,创建用户 xh 并分配到 test1)
+就不会有警告
 
 指定密码
 passwd 用户名
