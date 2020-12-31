@@ -54,13 +54,24 @@
 
 ### 添加用户
 
-```txt
+```md
 useradd [选项] 用户名
 实例:
+
 useradd xm
 会创建一个叫 xm 的用户,因为没有指定用户组,所以在创建用户 xm 的同时创建了一个同名(xm)的组,将用户 xm 分配到该组中(xm)
 被创建的用户可以在/home/目录下查看(cd /home/)
 cd : change directory 切换目录
+
+cd /home/ (切换到 home 目录)
+mkdir test (在 home 目录下创建文件夹)
+useradd -d /home/test/ xh (创建新用户 xh 并分配到 test 目录下)
+
+指定密码
+passwd 用户名
+passwd xm (给用户 xm 更改密码)
+然后输入密码即可
+如果密码过短会收到警告,只需再输入一遍即可强制使用该密码
 ```
 
 ## vi 和 vim 的使用
