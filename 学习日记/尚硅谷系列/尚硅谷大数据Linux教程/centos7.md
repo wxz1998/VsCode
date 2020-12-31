@@ -1,6 +1,6 @@
 # 服务器 CentOS7 学习
 
-## CentOS7 常用命令
+## CentOS7 常用
 
 ### 更换国内源
 
@@ -50,7 +50,9 @@
 - yum clean headers (删除所有头文件)
 - yum clean all (删除所有缓存的包和头文件)
 
-### 用户管理
+## 用户管理
+
+### 添加用户
 
 ## vi 和 vim 的使用
 
