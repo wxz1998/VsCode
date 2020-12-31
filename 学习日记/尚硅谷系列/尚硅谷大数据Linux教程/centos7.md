@@ -2,6 +2,15 @@
 
 ## CentOS7 常用
 
+### 切换 CentOS7 默认启动模式
+
+- `vi /etc/inittab` (查看有哪些启动模式)
+- multi-user.target: analogous to runlevel 3 (命令行模式)
+- graphical.target: analogous to runlevel 5 (图形模式)(前提是已经安装了图形界面)
+- 通过`systemctl get-default` 命令获取当前模式(注意：这里是：systemctl 是字母`l`,不是数字 1)
+- 通过`systemctl set-default graphical.target` 命令，修改启动模式为图形界面启动(前提是：你安装了图形界面)
+- 命令行启动模式则是`systemctl set-default multi-user.target`
+
 ### 更换国内源
 
 1. ping 国内源,谁快用谁
