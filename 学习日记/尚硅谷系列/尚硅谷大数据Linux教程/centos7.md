@@ -92,6 +92,9 @@ passwd xm (给用户 xm 更改密码)
 ```md
 userdel 用户名
 删除用户
+
+1. 删除用户但保留家目录 userdel xm
+2. 删除用户以及用户主目录 userdel -r xm
 ```
 
 ## vi 和 vim 的使用
